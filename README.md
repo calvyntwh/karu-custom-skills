@@ -1,69 +1,57 @@
 # karu-custom/skills
 
-A collection of self-improving AI agent skills for KiloCode CLI, Claude Code, and any Agent Skills-compatible agent.
+A collection of **self-improving** AI agent skills for KiloCode CLI, Claude Code, and other Agent Skills-compatible agents. Each skill learns from corrections and improves over time.
 
-## Features
+## Why Self-Improving Skills?
 
-- **Self-Improving**: Skills log corrections and learn from feedback
-- **Tested**: Real-world evaluation with measurable results
-- **Cross-Platform**: Works with KiloCode CLI, Claude Code, and more
+Most AI agent skills are static prompts that don't improve. These skills:
+- **Log corrections** after each use
+- **Track emerging patterns** across sessions
+- **Promote validated learnings** to persistent knowledge
+- **Reduce repeated mistakes** automatically
 
-## Skills
+## Skills (10 total)
 
 ### Writing & Text
 
-| Skill | Description |
-|-------|-------------|
-| **[humanizer-karu-custom](/calvyntwh/karu-custom-skills/tree/main/skills/humanizer-karu-custom)** | Remove AI patterns and add human voice. 24 pattern categories, self-improving. |
+| Skill | Description | Grade |
+|-------|-------------|-------|
+| **[humanizer-karu-custom](skills/humanizer-karu-custom)** | Remove AI patterns and add human voice. 24 pattern categories, tested with 92% accuracy. | A |
 
 ### Reasoning & Analysis
 
-| Skill | Description |
-|-------|-------------|
-| **[chestertons-fence](/calvyntwh/karu-custom-skills/tree/main/skills/chestertons-fence)** | Don't delete code until you understand why it was written. |
-| **[decision-matrix](/calvyntwh/karu-custom-skills/tree/main/skills/decision-matrix)** | Weighted trade-off analysis to eliminate recommendation bias. |
-| **[first-principles-thinking](/calvyntwh/karu-custom-skills/tree/main/skills/first-principles-thinking)** | Break problems to basic truths for innovative solutions. |
-| **[inversion-thinking](/calvyntwh/karu-custom-skills/tree/main/skills/inversion-thinking)** | Proactive failure analysis using the Saboteur Method. |
-| **[map-vs-territory](/calvyntwh/karu-custom-skills/tree/main/skills/map-vs-territory)** | Trust runtime truth over documentation. |
-| **[occams-razor](/calvyntwh/karu-custom-skills/tree/main/skills/occams-razor)** | Complexity pruning and simplification. |
-| **[pareto-principle](/calvyntwh/karu-custom-skills/tree/main/skills/pareto-principle)** | 80/20 rule for strategic prioritization. |
-| **[rubber-ducking](/calvyntwh/karu-custom-skills/tree/main/skills/rubber-ducking)** | Verbalize code to catch semantic errors. |
-| **[systems-thinking](/calvyntwh/karu-custom-skills/tree/main/skills/systems-thinking)** | Feedback loop analysis for architecture decisions. |
+| Skill | Description | Grade |
+|-------|-------------|-------|
+| **[chestertons-fence](skills/chestertons-fence)** | Don't delete code until you understand why it was written. | A |
+| **[decision-matrix](skills/decision-matrix)** | Weighted trade-off analysis to eliminate recommendation bias. | A |
+| **[first-principles-thinking](skills/first-principles-thinking)** | Break problems to basic truths for innovative solutions. | A |
+| **[inversion-thinking](skills/inversion-thinking)** | Proactive failure analysis using the Saboteur Method. | A |
+| **[map-vs-territory](skills/map-vs-territory)** | Trust runtime truth over documentation. | A |
+| **[occams-razor](skills/occams-razor)** | Complexity pruning and simplification. | A |
+| **[pareto-principle](skills/pareto-principle)** | 80/20 rule for strategic prioritization. | B+ |
+| **[rubber-ducking](skills/rubber-ducking)** | Verbalize code to catch semantic errors before running. | A |
+| **[systems-thinking](skills/systems-thinking)** | Feedback loop analysis for architecture decisions. | A |
 
-### Meta & Tools
+## Evaluation Results
 
-| Skill | Description |
-|-------|-------------|
-| **[skill-creator](/calvyntwh/karu-custom-skills/tree/main/skills/skill-creator)** | Create new skills with best practices. |
-| **[find-skills](/calvyntwh/karu-custom-skills/tree/main/skills/find-skills)** | Discover and install community skills. |
+All 10 skills tested with real scenarios:
 
-### Terminal & Navigation
-
-| Skill | Description |
-|-------|-------------|
-| **[cmux](/calvyntwh/karu-custom-skills/tree/main/skills/cmux)** | Terminal multiplexer control. |
-| **[cmux-browser](/calvyntwh/karu-custom-skills/tree/main/skills/cmux-browser)** | Browser automation with cmux. |
-| **[cmux-debug-windows](/calvyntwh/karu-custom-skills/tree/main/skills/cmux-debug-windows)** | Debug window management. |
-| **[cmux-markdown](/calvyntwh/karu-custom-skills/tree/main/skills/cmux-markdown)** | Open markdown in formatted viewer. |
+| Grade | Count | Skills |
+|-------|-------|--------|
+| **A** | 9 | chestertons-fence, decision-matrix, first-principles, inversion, map-vs-territory, occams-razor, rubber-ducking, systems-thinking, humanizer |
+| **B+** | 1 | pareto-principle |
 
 ## Installation
 
-### For KiloCode CLI
+### Clone All Skills
 
 ```bash
 git clone https://github.com/calvyntwh/karu-custom-skills.git ~/.agents/skills
 ```
 
-### For Claude Code
+### Clone Individual Skills
 
 ```bash
-git clone https://github.com/calvyntwh/karu-custom-skills.git ~/.claude/skills
-```
-
-### Individual Skills
-
-```bash
-# Clone just one skill
 git clone https://github.com/calvyntwh/karu-custom-skills.git
 cp -r skills/humanizer-karu-custom ~/.agents/skills/
 ```
@@ -75,23 +63,35 @@ Explicit invocation (recommended):
 Use the humanizer-karu-custom skill to fix this text
 Use the decision-matrix skill to compare React vs Vue
 Use the chestertons-fence skill before deleting this code
+Use the inversion-thinking skill to analyze security vulnerabilities
 ```
 
-## Self-Improvement
+## How Self-Improvement Works
 
-Skills marked with 🌱 include self-improvement systems. After using a skill, if you corrected something:
-- Check `.learnings/CORRECTIONS.md` for logged corrections
-- Check `.learnings/PATTERNS.md` for emerging patterns
+Each skill has a `.learnings/` directory:
+
+```
+skill/
+├── SKILL.md
+└── .learnings/
+    ├── CORRECTIONS.md   # Individual corrections
+    ├── PATTERNS.md     # Emerging patterns
+    ├── LEARNINGS.md    # Validated patterns (promoted)
+    └── REVIEW.md       # Review queue
+```
+
+After using a skill, if you corrected something or discovered a new pattern, check `.learnings/` to log and improve future performance.
 
 ## Credits
 
-- [blader/humanizer](https://github.com/blader/humanizer) - Original humanizer
-- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Signs_of_AI_writing) - Pattern reference
-- [Anthropic Skills](https://github.com/anthropics/skills) - Agent Skills spec
+- **[blader/humanizer](https://github.com/blader/humanizer)** - Original humanizer skill
+- **[Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Signs_of_AI_writing)** - Pattern reference
+- **[Anthropic Skills](https://github.com/anthropics/skills)** - Agent Skills specification
+- **[OpenClaw self-improving-agent](https://github.com/openclaw/skills)** - Self-improvement inspiration
 
 ## License
 
-MIT License - see individual skill folders for details.
+MIT License
 
 Copyright (c) 2024 blader (humanizer original)
 Copyright (c) 2026 calvyntwh
