@@ -13,25 +13,55 @@ license: MIT
 *   **Scaling:** "We need to handle 10x traffic."
 *   **Performance Tuning:** "The system is slow, let's add threads."
 *   **Post-Mortems:** "Why did fixing X break Y?"
+*   **Adding new services** that touch shared resources.
+
+## When NOT to Use
+*   **Simple, isolated changes** — single function, known system, no shared state.
+*   **Well-understood systems with < 5 connected components** — use simplified trace only.
+*   **Time-critical decisions** — loop analysis takes longer than linear analysis.
+*   **Experimental/prototype code** — where failure is expected and recovery is cheap.
+*   **Greenfield projects** — no loops exist yet to analyze.
 
 ## The Protocol: The Loop Protocol
+
 Stop thinking in Lines (Problem -> Solution).
 Start thinking in Loops (Action -> Result -> Feedback -> Action).
+
+### Protocol Triage
+
+Match rigor to risk:
+*   **Simplified (fast):** Known system, < 5 components, reversible change → Steps 1-2 only.
+*   **Full (thorough):** Novel architecture, post-mortem, irreversible change → All steps.
 
 ### 1. Identify the Node
 What variable are you changing?
 *   *Example:* "I am increasing the Thread Pool size."
+
+**Node Discovery:** Ask "What does this component talk to?" — trace data flow, not code structure.
 
 ### 2. Trace the Edges
 What is connected to this node?
 *   *Downstream:* Threads consume -> DB Connections.
 *   *Upstream:* Threads process -> Incoming Requests.
 
+**Hidden Edge Hunt:** Ask "What has broken in production that nobody predicted?" — force confrontation with unmapped dependencies.
+
 ### 3. Find the Loops
-*   **Reinforcing Loop (R):** Does A produce more B, which produces more A? (Explosion).
-    *   *Example:* Retry Logic. Fails -> Retry -> More Load -> Fails.
-*   **Balancing Loop (B):** Does A produce B, which reduces A? (Stability/Resistance).
-    *   *Example:* Auto-scaling. Load High -> Add Servers -> Load per Server Low -> Remove Servers.
+
+**Loop Priority (Analyze in Order):**
+1. **Reinforcing loops (R)** — Explosion risk. Short delay makes these dangerous.
+2. **Balancing loops (B)** — Bottleneck risk. Protect critical resource limits.
+3. **Delay-heavy loops** — Silent accumulation risk. Problems manifest long after cause.
+
+**Reinforcing Loop (R):** Does A produce more B, which produces more A?
+*   *Example:* Retry Logic. Fails -> Retry -> More Load -> Fails.
+*   *Saboteur Mode:* "If I wanted this to fail catastrophically, what would I amplify?"
+
+**Balancing Loop (B):** Does A produce B, which reduces A?
+*   *Example:* Auto-scaling. Load High -> Add Servers -> Load per Server Low -> Remove Servers.
+
+**Delay Effect:** Does change take time to manifest?
+*   *Example:* Cache warming, connection pool exhaustion, resource leaks.
 
 ### 4. Validation (The Pre-Mortem)
 Do not guess. Look for evidence.
@@ -39,45 +69,67 @@ Do not guess. Look for evidence.
 *   **Trade-off Question:** "If I maximize X, what *must* decrease?" (e.g., Speed vs Memory).
 *   **Drift Test:** "If we do this 1000 times a second, what breaks?"
 
-## Self-Improvement Protocol
+### 5. Duck Translation
+Explain each loop in one sentence:
+> "The [NODE] causes [EDGE], which causes [NODE], which [INCREASES/DECREASES] the original."
 
-This skill learns which architectural changes cause unintended consequences.
+If you can't say it plainly, you don't understand the loop.
 
-### Logging Corrections
+### 6. Second-Order Effects Check
+Ask for each loop identified:
+*   Does this loop affect other loops?
+*   Does success here create conditions for failure elsewhere?
+*   Does removing this loop create a new reinforcing loop?
 
-After Systems Thinking analysis:
+### Stop Conditions
+Stop analysis when:
+*   You've identified all loops connecting to the change
+*   Additional nodes reveal no new edges
+*   You've hit an **emergence boundary** — nodes interact to produce behavior none have alone
+*   Time spent exceeds value of further analysis (Pareto: 80% of insights from 20% of loops)
 
-**Log to `.learnings/CORRECTIONS.md`:**
+## Skill Integration Matrix
+
+| Skill | When to Chain |
+|-------|---------------|
+| [`chestertons-fence`](../chestertons-fence/SKILL.md) | Before removing any node — verify it's not load-bearing |
+| [`occams-razor`](../occams-razor/SKILL.md) | After systems-thinking: if no loops involve this component, simplification is safer |
+| [`inversion-thinking`](../inversion-thinking/SKILL.md) | For each R-loop, ask "How do I amplify this failure?" |
+| [`second-order-thinking`](../second-order-thinking/SKILL.md) | Trace cascades beyond immediate loop effects |
+| [`decision-matrix`](../decision-matrix/SKILL.md) | When criteria become circular — collapse into meta-criteria |
+| [`rubber-ducking`](../rubber-ducking/SKILL.md) | When loop explanation doesn't sound right in plain English |
+
+**Common Chain:** `systems-thinking` → `occams-razor` (simplify what isn't load-bearing) → `chestertons-fence` (verify before removing)
+
+## Self-Improvement Protocol (Simplified)
+
+After architecture analysis, log **only surprises**:
+
+**Log to `.learnings/system-loops.md`:**
 ```markdown
-## [YYYY-MM-DD] {Brief Description}
-
-**Change made:** {architectural decision}
-**Loop identified:** {reinforcing or balancing}
-**Side effect predicted:** {what we thought would happen}
-**Actual outcome:** {what actually happened}
-**Loop type:** {R (explosion) | B (stabilization)}
----
+- [YYYY-MM-DD] {system} → {loop type} → {predicted} vs {actual}
 ```
 
-### Trigger Conditions
+**Log if:**
+*   Unintended consequence occurred
+*   Loop behaved differently than predicted
+*   Missed a hidden dependency
 
-| Condition | Example | Log? |
-|-----------|---------|------|
-| Unintended consequence | "Changing X broke Y, which we didn't trace" | ✅ |
-| Loop prediction correct | "The reinforcing loop did explode as predicted" | ✅ |
-| Missed downstream effect | "Should have traced further" | ✅ |
-| Trade-off wrong | "Thought it was speed vs memory, was actually speed vs cost" | ✅ |
-| Balancing worked | "Auto-scaling dampened the issue" | ✅ |
+**Do NOT log** routine confirmations — loop analysis is documentation enough.
 
-### Pattern Categories for This Skill
+## Pattern Categories (Prioritized)
 
-- **Reinforcing loops**: Success spirals, death spirals, retry storms
-- **Balancing loops**: Homeostasis, saturation, bottlenecks
-- **Delay effects**: Changes that take time to manifest
-- **Trade-off errors**: Wrong optimization target chosen
-- **Cascading failures**: Single points of failure
-- **Hidden dependencies**: Coupling that wasn't obvious
+**High-Risk (Analyze First):**
+- Reinforcing loops with short delays (explosion risk)
+- Balancing loops protecting critical resources (bottleneck risk)
+- Shared state mutations
 
-### Review & Promote
+**Medium-Risk (Verify):**
+- Delay-heavy loops (silent accumulation)
+- External service dependencies
+- Caching layers
 
-**Monthly:** Check for recurring system patterns → Add to LEARNINGS.md
+**Low-Risk (Acknowledge):**
+- Well-isolated components
+- Read-only operations
+- Replicated services

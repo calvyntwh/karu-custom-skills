@@ -19,47 +19,88 @@ The ability to think beyond immediate consequences to cascading effects across t
 - **Analysis**: When an outcome seems counterintuitive (success or failure)
 - **Strategy**: When first-order wins lead to long-term losses (or vice versa)
 
+## When NOT to Use
+
+- **Reversible, low-stakes decisions** — first-order thinking suffices.
+- **Time-sensitive decisions** — analysis overhead exceeds decision value.
+- **Well-underbounded problems** — where cascade chains are infinite and unpredictable.
+- **When already using inversion-thinking** — for failure-mode focus, inversion is more efficient.
+
+**Rule of thumb:** Spend analysis proportional to `reversibility × stakes`. Low-stakes + reversible = first-order only.
+
 ## The Protocol: Cascading Consequence Analysis
 
-### Step 1: First-Order Effects
+### Simplified Mode (Quick Decisions)
+1. What happens first?
+2. And then what?
+3. And then what?
+Stop when effects become speculative or plateau.
 
-Identify the **immediate** outcomes of a decision.
+### Full Protocol (Important Decisions)
 
+#### Step 1: First-Order Effects
+Identify the **immediate** outcomes.
 **Question:** "What happens first?"
 
-### Step 2: Second-Order Effects
+#### Step 2: Second-Order Effects
+For each first-order effect, ask: **"And then what?"**
+Trace the chain forward.
 
-For each first-order effect, ask:
+#### Step 3: Third+ Order Effects
+Continue: **"And then what happens as a result of THAT?"**
 
-**Question:** "And then what?"
+#### Step 4: Time Horizon Analysis
+For each effect, estimate when it manifests:
 
-Trace the chain forward. Each "and then" is a second-order effect.
+| Time | Question | Calibration |
+|------|----------|-------------|
+| Immediate | What happens in 10 min/hours? | Halve your estimate |
+| Short-term | What happens in 10 days/weeks? | Halve your estimate |
+| Medium-term | What happens in 10 months/years? | Halve your estimate |
+| Long-term | What happens in 10+ years? | Quarter your estimate |
 
-### Step 3: Third+ Order Effects
+**Calibration warning:** Farnam Street heuristic — when in doubt, halve time horizon estimates. Systematic optimism is the default human bias.
 
-Continue the chain:
+#### Step 5: Feedback Loop Detection
+Connect to [`systems-thinking`](../systems-thinking/SKILL.md) for loop analysis.
+*   Reinforcing loops: Success → resources → more success (or failure → learned helplessness → worse failure)
+*   Balancing loops: Growth → limits → slower growth
 
-**Question:** "And then what happens as a result of THAT?"
+**Heuristic:** Does a second-order effect create conditions that amplify the original? If yes, you have a reinforcing loop.
 
-Most failures come from stopping too early.
+## Stop Conditions
 
-### Step 4: Time Horizon Analysis
+Stop tracing chains when:
+*   Effects plateau — further steps show diminishing returns
+*   Effects become speculative — no mechanism, just imagination
+*   Decision stakes don't justify deeper analysis
+*   You've traced through one full reinforcing or balancing loop
+*   Time spent exceeds value of further certainty
 
-For each effect, consider:
+**Pareto Guidance:** 80% of long-term impact comes from:
+1. Feedback loops that amplify or dampen
+2. Effects that change incentives
+3. Effects that affect future options
 
-| Time | Question |
-|------|----------|
-| Immediate | What happens in 10 minutes/hours? |
-| Short-term | What happens in 10 days/weeks? |
-| Medium-term | What happens in 10 months/years? |
-| Long-term | What happens in 10+ years? |
+Deprioritize: linear chains without loops, effects that plateau quickly, effects on inconsequential actors.
 
-### Step 5: Feedback Loop Detection
+## Second-Order Effects Check (The Missing Piece)
 
-Look for effects that **loop back**:
-- Does a second-order effect create conditions that amplify the original?
-- Does success create conditions that lead to failure (or vice versa)?
-- Are there reinforcing or balancing loops?
+This skill ironically lacks explicit second-order self-analysis. Add this:
+
+**Ask:** "What are the second-order effects of *thinking second-order*?"
+*   **Second-order:** Analysis paralysis, missed opportunities, social friction
+*   **Third-order:** You become known as someone who "thinks too much"
+*   **Fourth-order:** You miss the second-order benefit of *decisive action* — sometimes making a decision creates learning no analysis could replace
+
+## Logic Check
+
+Before accepting any chain, ask:
+1. Is there a documented mechanism linking A→B, or just correlation?
+2. Do actors in the chain have incentives that might break the link?
+3. Does this assume a stable environment?
+
+Trace the **mechanism**, not just the direction.
 
 ## Key Distinction: Second-Order vs Inversion
 
@@ -71,98 +112,51 @@ Look for effects that **loop back**:
 | **Time** | Static analysis | Dynamic across time horizons |
 | **Useful for** | Security, safety, debugging | Strategy, planning, decisions |
 
-Both are valuable. Use both.
+**Combined Protocol:** Run inversion to identify failure modes, then run second-order to trace what happens after those failures.
 
-## Example: Building a New Office
+## Skill Integration Matrix
 
-### First-Order Effects
-- Team moves closer together
-- Commute time increases for some
-- New equipment needed
+| Skill | When to Chain |
+|-------|---------------|
+| [`inversion-thinking`](../inversion-thinking/SKILL.md) | For failure-mode focus — combine with second-order for cascade tracing |
+| [`systems-thinking`](../systems-thinking/SKILL.md) | For feedback loop analysis — especially Step 5 |
+| [`decision-matrix`](../decision-matrix/SKILL.md) | Before scoring criteria, run time horizon analysis on each |
+| [`chestertons-fence`](../chestertons-fence/SKILL.md) | Before concluding — verify you understand why cascade terminates or loops |
+| [`first-principles-thinking`](../first-principles-thinking/SKILL.md) | To challenge the assumption that cascade analysis is necessary |
 
-### Second-Order Effects
-- Closer proximity → more spontaneous collaboration
-- Longer commute → some employees leave
-- New equipment → training required
+## Self-Improvement Protocol (Simplified)
 
-### Third-Order Effects
-- More collaboration → faster innovation
-- Employee departures → lost expertise + hiring costs
-- Training → temporary productivity dip
+After a decision plays out, log **only meaningful misses**:
 
-### Time Horizon Analysis
-| Effect | 1 month | 1 year | 5 years |
-|--------|---------|---------|---------|
-| Collaboration | ↑ | ↑↑ | ↑↑↑ |
-| Turnover | Minimal | +2 departures | Stable |
-| Innovation | Slight boost | Significant | Market leader? |
+**Log to `.learnings/cascades.md`:**
+```markdown
+- [YYYY-MM-DD] {decision} → {missed effect} ({actual outcome})
+```
 
-### The Insight
-The first-order "win" (new office) has second-order costs (turnover) that may outweigh the benefits. But the third-order opportunity (innovation leading to market position) might justify the decision.
+**Log if:**
+*   Missed a cascade entirely
+*   Time horizon was systematically wrong
+*   Chain broke due to actor incentive
+*   Feedback loop behaved differently than predicted
 
-## Common Second-Order Patterns
+**Do NOT log** routine confirmations or obvious cascades.
+
+## Common Patterns
 
 ### The Cobra Effect
 Punishment accidentally creates incentives for the opposite behavior.
-- First-order: Ban cobras → fewer cobras
-- Second-order: People breed cobras for reward income
-- Third-order: More cobras than before
 
 ### The Tolerance Paradox
 Tolerating intolerance leads to its spread.
-- First-order: Allow all speech
-- Second-order: Intolerant views gain platform
-- Third-order: Toleration of intolerance threatens the tolerant
 
 ### The Knowledge Curse
 Teaching something reduces ability to remember not knowing it.
-- First-order: Learn a skill
-- Second-order: Can't remember what it was like not knowing
-- Third-order: Poor communication with novices
 
-## Self-Improvement Protocol
+### Acceleration Effects
+Early wins create conditions for later problems (success → reduced caution → failure).
 
-This skill learns from decision outcomes to improve future analysis.
-
-### Logging Corrections
-
-After a decision plays out:
-
-**Log to `.learnings/CORRECTIONS.md`:**
-```markdown
-## [YYYY-MM-DD] {Decision/Scenario}
-
-**Decision made:** {what was decided}
-**First-order predicted:** {what we thought would happen immediately}
-**Second-order predicted:** {what we thought would cascade}
-**Actual outcome:** {what actually happened}
-**Missed effects:** {what we didn't anticipate}
-**Pattern:** {recurring theme if any}
----
-```
-
-### Trigger Conditions
-
-| Condition | Example | Log? |
-|-----------|---------|------|
-| Second-order was correct | "The collaboration boost happened as predicted" | ✅ |
-| Missed a cascade | "Didn't anticipate the turnover effect" | ✅ |
-| Positive surprise | "Didn't expect third-order innovation payoff" | ✅ |
-| Negative surprise | "Thought we had 3 years, happened in 6 months" | ✅ |
-| Time horizon wrong | "Expected 10-year effect, materialized in 2 years" | ✅ |
-
-### Pattern Categories
-
-- **Cobra effects**: Incentives backfire
-- **Feedback loops**: Success → failure or failure → success
-- **Knowledge curses**: Teaching impairs perspective
-- **Tolerance paradoxes**: Good intentions → bad outcomes
-- **Acceleration effects**: Early wins → later problems
-- **Delay effects**: Problems take time to manifest
-
-### Review & Promote
-
-**Monthly:** Check for recurring missed patterns → Add to LEARNINGS.md
+### Option Limitation
+Each decision closes future options — track what's being foreclosed.
 
 ## Resources
 

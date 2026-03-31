@@ -14,9 +14,21 @@ license: MIT
 *   **When** a solution feels "heavy", "boilerplate-y", or hard to explain.
 *   **During** Code Review to challenge over-engineering.
 
+## When NOT to Use
+*   **Performance-critical paths** where the "simpler" solution has worse algorithmic complexity.
+*   **Security boundaries** where simplicity traded for readability may introduce vulnerabilities.
+*   **Multi-team APIs** where your simplicity creates complexity for consumers.
+*   **Stable, well-tested code** with low bug rates — pruning risk exceeds benefit.
+*   **During active incidents** — focus on recovery, not refactoring.
+*   **Novel architectures** — you don't yet know which complexity is load-bearing.
+
 ## The Protocol: The Subtraction Method
 Do not ask "What can I add?". Ask "What can I remove?".
 Follow these 4 steps explicitly.
+
+### 0. Problem Verification
+Before pruning, verify the problem statement is correct.
+Ask: "What problem does this solve for the user?" If you can't answer, **do not prune**.
 
 ### 1. The Hypothesis
 Assume the current solution is over-engineered.
@@ -26,11 +38,8 @@ State: **"This solution is too complex. It can be simpler."**
 Iterate through every component. Prune ruthlessly, but verify safety.
 *   **Grep Test:** Search for the string/symbol in the entire codebase. Is it referenced dynamically?
 *   **Test Suite:** Run the project's tests. Do they pass?
-*   **Chesterton Check:** If uncertain about purpose, invoke [`chestertons-fence`](../chestertons-fence/SKILL.md) protocol first.
-*   **Decision Matrix:**
-    *   *Unused & No Deps:* **DELETE**.
-    *   *Unused but "Nice to have":* **DELETE**.
-    *   *Referenced or Tests Fail:* **KEEP**.
+*   **Chesterton Check:** If uncertain about purpose, invoke [`chestertons-fence`](../chestertons-fence/SKILL.md) protocol first. **Mandatory** for non-trivial components.
+*   **Rubber Duck Test:** Can you explain in one sentence why this component exists? If not, invoke chestertons-fence.
 
 ### 3. The Prune
 Actively remove the unnecessary components.
@@ -43,43 +52,65 @@ Does the *bare metal* system still solve the user's Core Problem?
 *   If YES: You are done.
 *   If NO: Restore only the *minimum* necessary piece.
 
-## Self-Improvement Protocol
+### Stop Conditions
+Stop pruning when:
+*   Tests fail and you don't understand why
+*   You cannot explain the component's purpose in plain English
+*   The component is referenced by code you don't own
+*   You've reached the "Core Problem" boundary — removing further breaks user value
 
-This skill learns which simplifications work and which cause problems.
+## Second-Order Check
+Before pruning, anticipate workarounds:
 
-### Logging Corrections
+**Ask:** "If I remove this, what will developers likely do instead?"
 
-After applying Occam's Razor:
+*   **Over-pruning pattern:** Removed abstraction → developers add inline duplication across 10 callers → **more complexity than removed**
+*   **Contract breach:** Removing validation layer → callers must add checks → **distributed complexity**
+*   **Knowledge loss:** Removing documentation → tribal knowledge only → **fragility**
 
-**Log to `.learnings/CORRECTIONS.md`:**
+If workaround complexity > removed complexity, **do not prune**.
+
+## Skill Integration Matrix
+
+| Skill | When to Chain |
+|-------|---------------|
+| [`chestertons-fence`](../chestertons-fence/SKILL.md) | **Always** before pruning non-trivial components |
+| [`systems-thinking`](../systems-thinking/SKILL.md) | Before pruning components with downstream dependencies |
+| [`second-order-thinking`](../second-order-thinking/SKILL.md) | Before pruning widely-used abstractions |
+| [`rubber-ducking`](../rubber-ducking/SKILL.md) | When you can't explain why something exists |
+| [`decision-matrix`](../decision-matrix/SKILL.md) | When simplicity vs. robustness trade-off is unclear |
+
+**Rule:** If systems-thinking identifies a reinforcing loop involving this component, **do not prune** without tracing the full loop.
+
+## Self-Improvement Protocol (Simplified)
+
+After applying Occam's Razor, log **only failures**:
+
+**Log to `.learnings/simplifications.md`:**
 ```markdown
-## [YYYY-MM-DD] {Brief Description}
-
-**Simplification made:** {what was removed/simplified}
-**Safety check used:** {grep | tests | chesterton}
-**Outcome:** {still works | caused bug | needed restoration}
-**Complexity indicator:** {what signaled over-engineering}
----
+- [YYYY-MM-DD] {what was removed} → {outcome}
 ```
 
-### Trigger Conditions
+**Log if:**
+*   Pruning caused a bug
+*   Over-pruning required restoration
+*   Second-order workaround created more complexity
 
-| Condition | Example | Log? |
-|-----------|---------|------|
-| Simplification worked | "Removed the abstraction, no problems" | ✅ |
-| Simplification caused bug | "Had to restore that 'overkill' class" | ✅ |
-| False positive | "Actually needed that complexity" | ✅ |
-| Grep test failed | "Was referenced dynamically" | ✅ |
-| Over-pruning | "Removed too much, had to add back" | ✅ |
+**Do NOT log** routine successful prunes — this overhead exceeds value.
 
-### Pattern Categories for This Skill
+## Pattern Categories (Prioritized)
 
-- **Abstraction layers**: When they hide necessary complexity
-- **Passthrough classes**: Manager/Service/Impl that add nothing
-- **Boilerplate indicators**: Long files, deep nesting
-- **Dependency bloat**: Libraries with one function
-- **Premature optimization**: "What if" code
+**High-Impact (Prune First):**
+- Unused exports / dead code
+- Passthrough classes with no logic
+- Wrapper libraries around native features
 
-### Review & Promote
+**Medium-Impact (Verify Before):**
+- Abstraction layers over stable internals
+- Configuration that could be hardcoded
+- Boilerplate that exceeds code it wraps
 
-**Weekly:** Check for recurring simplification patterns → Add to LEARNINGS.md
+**Low-Impact (Leave Alone):**
+- Code referenced by unknown callers
+- Security-sensitive validation
+- Multi-team API boundaries
