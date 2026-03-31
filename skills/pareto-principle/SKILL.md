@@ -13,68 +13,112 @@ license: MIT
 *   **Feature Creep:** When a project feels "unfocused" or "heavy".
 *   **Refactoring:** Identifying which module is causing 80% of the bugs.
 
-## The Protocol: The Scope Hammer
-Do not ask "Can we do this?". Ask "Should we do this?".
-Follow these 3 steps.
+## When NOT to Use
 
-### 1. List & Rate
+- **Single item:** No prioritization needed.
+- **Short list (< 5 items):** Simple ranking is faster and sufficient.
+- **Early-stage ambiguity:** When Value cannot be estimated because requirements are unclear.
+- **Time-critical delivery:** The overhead of scoring is not worth it for one-off decisions.
+- **High-stakes irreversible decisions:** 80/20 is a heuristic; use [decision-matrix](../decision-matrix/SKILL.md) for decisions that are hard to reverse.
+
+## The Protocol: The Scope Hammer
+
+Do not ask "Can we do this?". Ask "Should we do this?".
+
+### Step 0: Pre-Check (Should We?)
+Before any scoring, verify the mindset shift:
+- Is this about **scope optimization** (what to prioritize) or **option selection** (which one to choose)?
+- If option selection → use [decision-matrix](../decision-matrix/SKILL.md) instead.
+
+### Step 1: List & Rate
 List every proposed feature or task.
 **Ask the User** (or use Proxy Metrics):
-*   **Customer Value (V):** Ask user to rate 1-10 or rank items.
-*   **Effort Cost (E):** Proxy: "Number of files touched" or "Complexity of dependencies".
+*   **Value (V):** User rating 1-10 or ranked.
+*   **Effort (E):** Proxy: file count, complexity, dependencies.
 
-### 2. Calculate ROI
-Score = $V / E$ (Value divided by Effort).
+> [!IMPORTANT]
+> The V/E formula is a tiebreaker, not the core insight. If you can identify the vital few without it, skip the formula.
 
-### 3. The Cut (80/20)
-*   **Top 20% (High ROI):** DO IT NOW. This is the "Vital Few".
-*   **Middle 60%:** DEFER. Do not touch until the Top 20% are perfect.
-*   **Bottom 20% (Negative ROI):** DELETE. This is the "Trivial Many".
+### Step 2: Add Confidence Modifiers
+Rate confidence in each estimate (1-3):
 
-## Example
-| Task | Value | Effort | Score | Action |
-| :--- | :--- | :--- | :--- | :--- |
-| **Core Payment API** | 10 | 5 | **2.0** | **BUILD** |
-| **Dark Mode** | 3 | 2 | 1.5 | DEFER |
-| **Animated Logo** | 1 | 8 | 0.1 | **DELETE** |
+| Confidence | Meaning |
+|------------|---------|
+| 1 | Speculative (no evidence) |
+| 2 | Based on partial data |
+| 3 | Based on benchmarks or user research |
+
+Apply discount: `Adjusted Score = (V/E) × (V_conf × E_conf) / 4`
+
+Low-confidence items get penalized automatically.
+
+### Step 3: The Cut (Iterative, Not One-Time)
+
+**Top 20% (High ROI):** DO IT NOW. This is the "Vital Few".
+**Middle 60%:** DEFER. Do not touch until Top 20% is complete.
+**Bottom 20% (Negative ROI):** DELETE or archive.
+
+> [!WARNING]
+> **DEFER is not PERMANENT.** Items in the middle 60% should be re-evaluated after each Top 20% item is completed. The backlog changes; so should the prioritization.
+
+### Step 4: Re-Cut Trigger
+After completing each Top 20% item:
+1. Recalculate ROI for remaining items (dependencies may have changed)
+2. Ask: "Has context shifted? Any deferred items now have higher Value?"
+3. Re-cut if necessary
+
+## Timeboxing
+
+- **Maximum list size before simplification:** 20 items. Beyond this, use grouping.
+- **Scoring time budget:** 5 minutes per item. If V or E cannot be estimated in that time, default to V=5, E=5 (score=1) and mark as uncertain.
+- **Re-cut frequency:** After each Top 20% completion, or bi-weekly for long-running projects.
+
+## Defer/DELETE Safeguard
+
+Before labeling an item DELETE, ask:
+- "Will deleting this increase effort on remaining items?" (dependency)
+- "Will this become more expensive to build later?" (technical debt)
+- "Is this a 'trivially deferred' item that will become critical?" (scope creep pattern)
+
+If yes to any → Move to DEFER instead.
+
+Before labeling an item DEFER, ask:
+- "Can this be completed in < 2 hours?" If yes, just do it now.
+- "Is this a dependency blocker for Top 20% items?" If yes, elevate it.
+
+## Validation Steps
+
+Before the final cut:
+1. **Confirm distribution:** Does 80/20 actually hold in your domain? Validate with historical data if possible.
+2. **Check non-negotiables:** Does any item violate a hard constraint (security, compliance)? Elevate regardless of ROI.
+3. **Saboteur check:** [inversion-thinking](../inversion-thinking/SKILL.md) - How could this prioritization backfire?
+
+## Skill Integration
+
+| Situation | Use Instead/Also |
+|-----------|------------------|
+| Choosing between options | [decision-matrix](../decision-matrix/SKILL.md) |
+| Need to verify value estimates | [map-vs-territory](../map-vs-territory/SKILL.md) |
+| Criteria might be wrong | [chestertons-fence](../chestertons-fence/SKILL.md) |
+| Risk of over-analysis | [occams-razor](../occams-razor/SKILL.md) |
+| Preventing deferral from becoming permanent | [inversion-thinking](../inversion-thinking/SKILL.md) |
+| Understanding cascading effects | [second-order-thinking](../second-order-thinking/SKILL.md) |
 
 ## Self-Improvement Protocol
 
-This skill learns which prioritization decisions work out.
+After applying Pareto, log to `.learnings/CORRECTIONS.md` **only if** outcome differed from prediction:
 
-### Logging Corrections
-
-After applying Pareto Principle:
-
-**Log to `.learnings/CORRECTIONS.md`:**
 ```markdown
 ## [YYYY-MM-DD] {Brief Description}
-
-**Task prioritized:** {what was chosen}
-**Task deferred/deleted:** {what was not done}
-**Outcome:** {did the prioritization work?}
-**Value estimate accuracy:** {was the V rating correct?}
----
+**Action:** {what was prioritized / deferred / deleted}
+**Outcome:** {did it work?}
+**Lesson:** {one sentence}
 ```
 
-### Trigger Conditions
+**Review Trigger:** Monthly → check CORRECTIONS.md → promote validated patterns to LEARNINGS.md.
 
-| Condition | Example | Log? |
-|-----------|---------|------|
-| Defer was wrong | "Should have built Dark Mode first" | ✅ |
-| Delete was wrong | "The 'trivial' feature was actually important" | ✅ |
-| Value estimate off | "Users didn't care about the 'core' feature" | ✅ |
-| Effort estimate wrong | "Thought it was 2, turned out to be 10" | ✅ |
-| 80/20 was wrong | "The 20% wasn't the vital one" | ✅ |
+**Defer Watch:** If an item has been "DEFER" for > 3 months, explicitly ask user: "Is this still DEFER or should it be DELETE?"
 
-### Pattern Categories for This Skill
-
-- **Value misprediction**: What users actually want vs what we thought
-- **Effort estimation errors**: Complexity surprises
-- **Scope creep patterns**: When deferral became permanent
-- **ROI calculation errors**: Wrong V/E assumptions
-- **Feature dependencies**: Tasks that blocked others
-
-### Review & Promote
-
-**Weekly:** Check CORRECTIONS.md → Promote validated patterns to LEARNINGS.md
+## Resources
+*   [Detailed Research Notes](references/research.md)
+*   [Impact Matrix Reference](references/impact_matrix.md)

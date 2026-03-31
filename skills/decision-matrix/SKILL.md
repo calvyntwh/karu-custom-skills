@@ -14,6 +14,14 @@ license: MIT
 *   **Vendor Selection:** "AWS vs GCP vs Azure?"
 *   **Any Multi-Option Decision:** When there are 3+ options and no obvious winner.
 
+## When NOT to Use
+
+- **2 options or fewer:** Use Pros/Cons instead. Matrix adds overhead without benefit.
+- **Incommensurable options:** Cannot compare "adopt React" vs "build custom framework" if the evaluation criteria cannot be objectively measured.
+- **Non-compensatory criteria:** If any criterion is an absolute blocker (e.g., "must support IE11"), filter those options first.
+- **High uncertainty / no data:** When you cannot evidence any scores, the matrix produces false precision.
+- **Already decided:** If the user has already chosen, the matrix will confirm rather than inform.
+
 ## The Protocol: Weighted Scoring
 
 ### 0. Pre-Check (Occam's Razor)
@@ -33,7 +41,14 @@ Ask the user for their **Top 3-5** evaluation criteria.
 
 *   *Example Criteria:* Performance, Learning Curve, Ecosystem Size, Bundle Size, Hiring Pool
 
-### 3. Assign Weights (WITH USER)
+### 3. Check for Conflicts
+Before proceeding, ask the user:
+- "Do any of these criteria conflict with each other?" (e.g., "max performance" vs "min bundle size")
+- "Is any criterion non-negotiable — meaning if any option fails it, it's automatically disqualified?"
+
+If yes, filter out disqualified options before scoring.
+
+### 4. Assign Weights (WITH USER)
 Ask the user to rate the importance of each criterion.
 
 | Weight | Meaning |
@@ -43,21 +58,46 @@ Ask the user to rate the importance of each criterion.
 | 3 | Very important |
 | 4 | Critical / Non-negotiable |
 
-### 4. Score Options
+### 5. Score Options (with Evidence)
 Rate each option against each criterion (1-5 scale).
-*   1 = Poor
-*   3 = Adequate
-*   5 = Excellent
+
+| Score | Meaning | Evidence Required |
+|-------|---------|-------------------|
+| 1 | Poor | Must cite specific data point |
+| 3 | Adequate | Default if uncertain |
+| 5 | Excellent | Must cite specific data point |
+
+> [!WARNING]
+> **No evidence = Score 3.** If you cannot cite benchmarks, docs, or user research, default to "Adequate" (3). Do not guess.
 
 *You (the agent) can score based on research, but weights come from the user.*
 
-### 5. Calculate Weighted Scores
+### 6. Calculate Weighted Scores
 For each option: `Total = Σ (Score × Weight)`
 
-### 6. Recommend & Verbalize
+Present results as a range: "Vue: 38-42, React: 36-40" to acknowledge uncertainty.
+
+### 7. Recommend & Verbalize
 Present the matrix and state the winner with reasoning.
 
 *   "Based on your priorities (Performance=Critical, Learning Curve=Important), **Vue** scores highest because..."
+
+### 8. Set Review Trigger
+Set a 6-month review checkpoint. Log this decision to `.learnings/REVIEW.md`.
+
+## Validation Steps
+
+Before presenting results, verify:
+1. **Non-compensatory filter applied:** Were hard constraints checked first?
+2. **Conflict detection done:** Were negatively correlated criteria surfaced?
+3. **Evidence anchoring:** Did you cite evidence for scores of 1 or 5?
+4. **Uncertainty notation:** Did you use ranges for high-uncertainty outputs?
+
+## Timeboxing
+
+- **Maximum criteria:** 7 (beyond this, weights become statistically meaningless)
+- **Maximum options:** 10 (beyond this, scoring becomes inconsistent)
+- **Time budget:** If analysis exceeds 30 minutes, simplify to binary (Meets/Doesn't meet) or Pros/Cons
 
 ## Example
 
@@ -79,46 +119,31 @@ Present the matrix and state the winner with reasoning.
 
 **Recommendation:** "Vue scores highest (40) primarily due to its excellent Learning Curve score, which you rated as Critical."
 
+## Skill Integration
+
+| Situation | Use Instead/Also |
+|-----------|------------------|
+| 2 options | [Pros/Cons](../rubber-ducking/SKILL.md) or [rubber-ducking](../rubber-ducking/SKILL.md) |
+| Need to validate scores | [map-vs-territory](../map-vs-territory/SKILL.md) |
+| Criteria might be wrong | [chestertons-fence](../chestertons-fence/SKILL.md) |
+| Risk of over-analysis | [occams-razor](../occams-razor/SKILL.md) |
+| Need to understand second-order effects | [second-order-thinking](../second-order-thinking/SKILL.md) |
+| Prioritizing a backlog | [pareto-principle](../pareto-principle/SKILL.md) |
+
 ## Self-Improvement Protocol
 
-This skill learns from decisions to improve future trade-off analysis.
+After a decision is made, log to `.learnings/CORRECTIONS.md` **only if** the outcome differed from prediction. Keep entries brief:
 
-### Logging Corrections
-
-After a decision made using this matrix:
-
-**Log to `.learnings/CORRECTIONS.md`:**
 ```markdown
 ## [YYYY-MM-DD] {Brief Description}
-
 **Decision:** {what was chosen}
-**Outcome:** {how did it turn out? Correct or wrong?}
-**Criteria accuracy:** {were the weights right?}
-**Pattern:** {lessons learned}
----
+**Outcome:** {Correct or wrong?}
+**Lesson:** {one sentence}
 ```
 
-### Trigger Conditions
+**Review Trigger:** If no entries in 60+ days, the self-improvement loop is inactive. Resume by reviewing `.learnings/LEARNINGS.md` before next use.
 
-| Condition | Example | Log? |
-|-----------|---------|------|
-| Chose option that failed | "The winner turned out to be wrong" | ✅ |
-| Weights were wrong | "Should have weighted learning curve higher" | ✅ |
-| Missing criteria discovered | "Security should have been a criteria" | ✅ |
-| Outcome matched prediction | "Framework held up well under load" | ✅ |
-| False positive | "Matrix said X but Y was clearly better" | ✅ |
-
-### Pattern Categories for This Skill
-
-- **Weight calibration errors**: Over/under weighting criteria
-- **Missing criteria**: Security, team familiarity, maintenance
-- **Score accuracy**: Model predictions vs reality
-- **Bias patterns**: Popularity bias, anchoring bias
-- **Context failures**: Criteria that worked in one context but not another
-
-### Review & Promote
-
-**Monthly:** Check CORRECTIONS.md → Promote validated patterns to LEARNINGS.md
+**Promote:** Monthly, check CORRECTIONS.md → move validated lessons to LEARNINGS.md.
 
 ## Resources
 *   [Detailed Research Notes](references/research.md)
