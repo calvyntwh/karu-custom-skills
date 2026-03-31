@@ -13,6 +13,29 @@ license: MIT
 *   **Simplifying:** When merging classes or functions.
 *   **Debugging:** When "optimizing" a function breaks a seemingly unrelated feature.
 
+## When NOT to Use
+*   **Greenfield code:** Code you just wrote yourself has no historical fence.
+*   **Well-tested code:** Code with comprehensive tests that would catch removal issues.
+*   **Trivial code:** One-liners, obvious utilities, boilerplate that has no side effects.
+*   **Configuration intent:** Code where the "weirdness" is the actual business logic (e.g., `id !== 0` for legacy API).
+*   **Personal recent code:** Code you wrote within the last week and remember why it exists.
+
+> [!WARNING]
+> Do not apply this skill reflexively. If the code is obviously correct and recent, skip the archaeology.
+
+## Prioritization Matrix
+
+Before investigating, assess the **blast radius** if you're wrong:
+
+| Risk Level | Examples | Investigation Depth |
+|------------|----------|---------------------|
+| **HIGH** | Security checks, auth guards, race condition locks, payment validation | Full archaeology + rubber-ducking explanation |
+| **MEDIUM** | Bug workarounds, legacy API compatibility, edge case guards | Git blame + commit message review |
+| **LOW** | Performance optimizations, caching, memoization | Quick check; easy to add back if needed |
+
+> [!NOTE]
+> If investigating HIGH-risk code and you cannot explain why it exists: **DO NOT DELETE.** Flag for human review.
+
 ## The Protocol: The Context Audit
 **Constraint:** You are FORBIDDEN from deleting code if you cannot explain why it was added.
 
@@ -41,8 +64,13 @@ Compare the Past Context with the Present Reality.
 | Discovery | Action | Protocol |
 | :--- | :--- | :--- |
 | **I found the reason, and it is DEFINITELY obsolete.** | **DELETE** | Document the specific reason for deletion in your commit/PR. |
+| **I found the reason, and it is legitimate but complex.** | **REFACTOR** | Keep the protection, improve the clarity. Document the edge case. |
 | **I found the reason, and the risk is real.** | **KEEP & DOCUMENT** | The Map was wrong. Add a comment explaining *why* this "ugly" code saves the system. |
 | **I cannot find the reason.** | **DO NOT DELETE** | Flag for human review. It is a "load-bearing fence". |
+
+### 4b. The Rubber-Duck Check (Before Decision)
+Before finalizing DELETE/KEEP/REFACTOR, explain the code's logic in plain English:
+*If you cannot explain WHY it works, you do not understand it enough to change it.*
 
 ## Example: The "Ugly" Null Check
 
@@ -65,16 +93,19 @@ if (user && user.id && user.id !== 0) { ... } // Ugly!
 
 This skill learns from corrections to improve future fence detection.
 
-### Logging Corrections
+> [!TIP]
+> **Simplified mode:** Logging is OPTIONAL. Only log when you discover a pattern worth remembering. One-off corrections don't need tracking.
 
-After applying Chesterton's Fence protocol, if you discover or miss a fence:
+### Logging Corrections (Optional)
+
+After applying Chesterton's Fence protocol, if you discover a recurring pattern:
 
 **Log to `.learnings/CORRECTIONS.md`:**
 ```markdown
 ## [YYYY-MM-DD] {Brief Description}
 
 **Code in question:** "{the code}"
-**Decision made:** {DELETE | KEEP | FLAGGED}
+**Decision made:** {DELETE | KEEP | REFACTOR | FLAGGED}
 **Outcome:** {what happened}
 **Pattern:** {what type of fence this was}
 ---
@@ -82,13 +113,14 @@ After applying Chesterton's Fence protocol, if you discover or miss a fence:
 
 ### Trigger Conditions
 
+Only log when the correction reveals a **pattern** (not a one-off):
+
 | Condition | Example | Log? |
 |-----------|---------|------|
-| Deleted code that later caused bug | "Shouldn't have deleted that null check" | ✅ |
-| Kept code that turned out obsolete | "The edge case no longer exists" | ✅ |
-| Found the reason via git archaeology | "Found the bug this prevented" | ✅ |
-| Missed an obvious fence | "That 'ugly' code was load-bearing" | ✅ |
-| False positive flagged | "The fence wasn't actually there" | ✅ |
+| Deleted code that later caused bug | Pattern: HIGH-risk fence missed | ✅ |
+| Found 3+ similar legacy compatibility fences | Pattern: Legacy API handling | ✅ |
+| Refactored complex fence to clearer form | Pattern: Refactor opportunity | ✅ |
+| Single one-off correction | "That specific null check was wrong" | ❌ |
 
 ### Pattern Categories for This Skill
 
@@ -99,9 +131,15 @@ After applying Chesterton's Fence protocol, if you discover or miss a fence:
 - **Bug workarounds**: Hacks that fix specific known bugs
 - **Performance optimizations**: Caching, memoization, early returns
 
-### Review & Promote
+## Skill Integration
 
-**Weekly:** Check CORRECTIONS.md for 3+ instances of same pattern → Promote to LEARNINGS.md
+| Skill | Relationship | When to Chain |
+|-------|--------------|---------------|
+| **rubber-ducking** | Complements this skill | Before final decision, explain the code's logic in plain English |
+| **occams-razor** | Tension exists; they're partners | Occam says "simplify if safe"; this skill says "verify it's safe first" |
+| **map-vs-territory** | Git archaeology is a map probe | When git history is sparse, fall back to runtime verification |
+| **inversion-thinking** | Step 1 uses inversion | Use saboteur method to ask "what could go wrong if I delete this?" |
+| **pareto-principle** | Risk prioritization | Apply this skill first to HIGH-risk code; skip for LOW-risk code |
 
 ## Resources
 *   [Detailed Research Notes](references/research.md)

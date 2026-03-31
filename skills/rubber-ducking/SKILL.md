@@ -13,6 +13,31 @@ license: MIT
 *   **Debugging:** When "it should work" but produces wrong output.
 *   **Code Review:** When reviewing your own generated code before presenting it.
 
+## When NOT to Use
+*   **Trivial code:** One-liners, obvious utilities, getter/setter functions.
+*   **Already-tested utilities:** Standard library functions with existing test coverage.
+*   **Clear boilerplate:** Obvious configuration, simple variable assignments.
+*   **Debug print statements:** Temporary logging code.
+
+> [!NOTE]
+> If you hesitate to explain it, it's complex. If you can explain it in one sentence without thinking, skip ducking.
+
+## Prioritization: Which Bugs Does Ducking Catch Best?
+
+| Bug Type | Ducking Effectiveness | Example |
+|----------|------------------------|---------|
+| **Logic errors** | ✅ High | Off-by-one, wrong branch, inverted condition |
+| **State machine bugs** | ✅ High | Missed transition, invalid state |
+| **Business logic mismatches** | ✅ High | Code does X, user wanted Y |
+| **Type coercion issues** | 🟡 Medium | JavaScript truthy/falsy surprises |
+| **Concurrency bugs** | ❌ Low | Race conditions, deadlocks (verbalization is sequential) |
+| **Memory bugs** | ❌ Low | Buffer overflows, pointer corruption |
+| **Heisenbugs** | ❌ Low | Bugs that disappear when observed |
+| **Library mismatches** | ❌ Low | API changed silently, version mismatch |
+
+> [!WARNING]
+> Ducking catches **semantic** bugs (code does something other than intent). It does NOT catch **syntactic** bugs (code crashes), **concurrency** bugs (parallel interaction), or **environmental** bugs (wrong library version).
+
 ## The Protocol: Explain It to the Duck
 **Constraint:** You must be able to explain the code in plain English. If you cannot, you do not understand it.
 
@@ -50,6 +75,14 @@ Compare your English description to the User's stated goal.
 *   **If Match:** Proceed to run/save the code.
 *   **If Mismatch:** Do NOT run. Fix the logic first. The translation revealed the bug.
 
+### 4b. Systems Check (Before Running)
+Ask yourself:
+*   "What does this code return?"
+*   "What does the caller expect?"
+*   "Does this change any shared state?"
+
+If the code affects downstream systems, apply **map-vs-territory** to verify the integration contract.
+
 ## Example: The Off-By-One Bug
 
 **User Goal:** "Reverse the array in place."
@@ -74,11 +107,12 @@ def reverse(arr):
 
 ## Self-Improvement Protocol
 
-This skill learns which logical explanations catch bugs.
+> [!TIP]
+> **Simplified mode:** Logging is OPTIONAL. Only log when you discover a pattern worth remembering.
 
-### Logging Corrections
+### Logging Corrections (Optional)
 
-After Rubber Ducking:
+After Rubber Ducking, if you discover a recurring pattern:
 
 **Log to `.learnings/CORRECTIONS.md`:**
 ```markdown
@@ -93,13 +127,14 @@ After Rubber Ducking:
 
 ### Trigger Conditions
 
+Only log when the correction reveals a **pattern**:
+
 | Condition | Example | Log? |
 |-----------|---------|------|
-| Translation revealed bug | "Explaining it made the error obvious" | ✅ |
-| Missed bug in translation | "Should have caught that" | ✅ |
-| False positive | "The translation was confusing but code was right" | ✅ |
-| Goal mismatch caught | "Code didn't actually match user's intent" | ✅ |
-| Off-by-one found | "The loop boundary was wrong" | ✅ |
+| Same bug type caught 3+ times | Off-by-one errors in loop boundaries | ✅ |
+| New bug category discovered | "Concurrency bug that ducking missed" | ✅ |
+| Goal refinement pattern found | "User's goal was underspecified" | ✅ |
+| Single one-off bug | "Caught a random logic error" | ❌ |
 
 ### Pattern Categories for This Skill
 
@@ -110,9 +145,27 @@ After Rubber Ducking:
 - **Type coercion issues**: JavaScript truthy/falsy surprises
 - **Scope errors**: Closures, this binding
 
-### Review & Promote
+## Benefits Cascade
 
-**Weekly:** Check for recurring bug patterns → Add to LEARNINGS.md
+**First-order:** Bug caught before running (fast).
+
+**Second-order:**
+*   Reduced debugging time
+*   Improved mental model for future tasks
+*   English translations serve as inline documentation
+
+**Third-order:**
+*   Pattern recognition improves over time
+*   Discipline trains better code generation habits
+
+## Skill Integration
+
+| Skill | Relationship | When to Chain |
+|-------|--------------|---------------|
+| **chestertons-fence** | Complements this skill | Before deleting ANY code, explain why it was added |
+| **map-vs-territory** | Verifies runtime behavior | When Goal Alignment Check passes but code still fails |
+| **decision-matrix** | For choosing approaches | When ducking reveals multiple valid solutions |
+| **inversion-thinking** | Catch "bugs that escape" | Apply saboteur method to find missed edge cases |
 
 ## Resources
 *   [Detailed Research Notes](references/research.md)
