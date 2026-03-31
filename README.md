@@ -28,6 +28,7 @@ A collection of self-improving AI agent skills for KiloCode CLI, Claude Code, an
 | **[occams-razor](skills/occams-razor)** | Complexity pruning using the Subtraction Method. |
 | **[pareto-principle](skills/pareto-principle)** | 80/20 rule for strategic prioritization. |
 | **[rubber-ducking](skills/rubber-ducking)** | Verbalize code to catch semantic errors. |
+| **[second-order-thinking](skills/second-order-thinking)** | Cascade consequences: "And then what?" across time horizons. |
 | **[systems-thinking](skills/systems-thinking)** | Feedback loop analysis for architecture decisions. |
 
 ## Installation
