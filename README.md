@@ -55,6 +55,35 @@ Use the decision-matrix skill to compare React vs Vue
 Use the chestertons-fence skill before deleting code
 ```
 
+## Skill Workflows
+
+Skills chain together for common tasks:
+
+### Decision Making
+**first-principles → decision-matrix → pareto-principle → second-order**
+1. Break problem to basic truths
+2. Weigh options against priorities
+3. Cut the 80% low-value work
+4. Check cascading consequences
+
+### Safe Refactoring
+**chestertons-fence → occams-razor → rubber-ducking**
+1. Understand why code exists before deleting
+2. Simplify and prune complexity
+3. Validate simplified logic before running
+
+### Debugging
+**rubber-ducking → map-vs-territory → chestertons-fence**
+1. Explain what code should do (often reveals bug)
+2. Verify runtime reality vs documentation
+3. Ensure fix doesn't break unknown dependencies
+
+### Architecture & Critical Changes
+**systems-thinking → second-order → inversion-thinking**
+1. Map feedback loops and dependencies
+2. Trace consequences across time horizons
+3. Identify failure modes (saboteur simulation)
+
 ## How Self-Improvement Works
 
 Each skill includes a `.learnings/` directory:
