@@ -1,6 +1,6 @@
 ---
 name: humanizer-karu-custom
-version: 3.0.0
+version: 4.0.0
 description: |
   Remove signs of AI-generated writing from text and continuously improve
   through self-correction. Use when editing or reviewing text to make it sound
@@ -24,21 +24,131 @@ allowed-tools:
   - Bash
 ---
 
-# Humanizer: Remove AI Writing Patterns (Self-Improving Edition)
+# Humanizer: Remove AI Writing Patterns
 
-When given text to humanize:
+## When NOT to Use This Skill
 
-1. **Identify AI patterns** - Scan for the patterns listed below
-2. **Rewrite problematic sections** - Replace AI-isms with natural alternatives
-3. **Preserve meaning** - Keep the core message intact
-4. **Maintain voice** - Match the intended tone (formal, casual, technical, etc.)
-5. **Add soul** - Don't just remove bad patterns; inject actual personality
-6. **Log for improvement** - After humanizing, check if correction should be recorded
-7. **Apply learned patterns** - Consult `.learnings/` for context-specific shortcuts
+- **Academic/scientific writing with genuine hedging**: Phrases like "our results may indicate" or "further research is needed" are appropriate when uncertainty exists. Do not strip legitimate scholarly caution.
+- **Formal legal or compliance documents**: Certain formulaic phrases are required for precision and legal validity.
+- **Technical documentation with standard terminology**: If the text uses established technical terms correctly, do not "simplify" them into casual language.
+- **When preserving the original voice is more important than removing AI patterns**: Some authors have distinctive styles that happen to overlap with AI patterns.
+- **Marketing copy where enthusiasm is appropriate**: Promotional language may be the intended tone.
+
+**Context modes** (see Context Modes section) should guide which patterns to apply and how aggressively.
+
+---
+
+## Context Modes
+
+Apply patterns differently based on the target register:
+
+| Mode | Description | Pattern Weighting |
+|------|-------------|-------------------|
+| **Academic** | Scholarly writing, research papers, dissertations | High: Remove filler phrases, hedge appropriately. Medium: AI vocabulary may be legitimate in field-specific usage. Low: Do not over-strip hedging—uncertainty is correct in academic writing. |
+| **Casual** | Blog posts, opinion pieces, personal essays | High: Em dash overuse, promotional language, AI vocabulary. Medium: Rule of three, negative parallelism. Low: Formal constructions that feel stiff. |
+| **Technical** | Documentation, code comments, API docs, reports | High: Filler phrases, copula avoidance. Medium: Vague attributions. Low: Title case, emojis (unless interface docs). Preserve precision terminology. |
+| **Marketing** | Sales copy, landing pages, advertisements | High: Promotional clichés, sycophantic tone. Medium: Rule of three (use intentionally). Low: AI vocabulary may fit brand voice. Focus on "Add soul" to differentiate. |
+
+---
+
+## Pattern Severity Tiers
+
+Patterns are prioritized by impact. Address HIGH tier first, then MEDIUM, then LOW.
+
+### Tier 1: HIGH Impact (Address always in appropriate context)
+
+1. **AI Vocabulary** (Pattern 7): Additionally, crucial, pivotal, underscore, landscape, showcase, testament
+2. **Em Dash Overuse** (Pattern 13): Multiple em dashes in close proximity
+3. **Filler Phrases** (Pattern 22): In order to, due to the fact that, at this point in time
+4. **Inflated Significance** (Pattern 1): Pivotal moment, testament, underscores the importance
+5. **Promotional Language** (Pattern 4): Breathtaking, groundbreaking, renowned, nestled
+6. **Sycophantic Tone** (Pattern 21): Great question!, You're absolutely right!, Excellent point
+
+### Tier 2: MEDIUM Impact (Address when clearly present)
+
+7. **Superficial -ing Analyses** (Pattern 3): Highlighting, underscoring, reflecting
+8. **Vague Attributions** (Pattern 5): Experts believe, some critics argue
+9. **Rule of Three Overuse** (Pattern 10): Innovation, inspiration, industry insights
+10. **Negative Parallelism** (Pattern 9): Not only...but..., It's not just...it's...
+11. **Copula Avoidance** (Pattern 8): Serves as, stands as, boasts
+12. **Generic Positive Conclusions** (Pattern 24): Exciting times lie ahead, major step forward
+
+### Tier 3: LOW Impact (Address selectively or deprecate)
+
+13. **Elegant Variation** (Pattern 11): Synonym cycling—often stylistic preference
+14. **Boldface Overuse** (Pattern 14): Mechanical emphasis
+15. **Inline-Header Lists** (Pattern 15): Excessive list formatting
+16. **Title Case** (Pattern 16): Cosmetic only
+17. **False Ranges** (Pattern 12): From X to Y where scale is meaningless
+18. **Excessive Hedging** (Pattern 23): Over-qualified statements
+19. **Collaborative Artifacts** (Pattern 19): I hope this helps, let me know
+20. **Emojis** (Pattern 17): Decorative emojis—trivial to spot manually
+
+### Deprecated Patterns (Do not apply)
+
+- **Curly Quotation Marks** (Pattern 18): Formatting issue, not writing style
+- **Knowledge-Cutoff Disclaimers** (Pattern 20): Obsolete—AI models now have current training data
+
+---
+
+## Pattern Conflict Detection
+
+When multiple patterns conflict or overlap:
+
+1. **Single phrase, multiple patterns**: Apply the most severe tier pattern. Do not double-count.
+2. **Conflicting guidance from context mode**: Default to the context mode setting.
+3. **Conflicts with grammar/clarity skills**: Humanizer addresses voice/tone; do not override grammar corrections.
+4. **Author voice vs. pattern removal**: Preserve author-introduced terms that may overlap with AI vocabulary (e.g., "key" in a piece the author wrote about keys).
+
+Resolution priority: Author voice > Context mode > Severity tier > Default fix
 
 ---
 
 ## PERSONALITY AND SOUL
+
+Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as obvious as slop. Good writing has a human behind it.
+
+### Signs of soulless writing (even if technically "clean"):
+
+- Every sentence is the same length and structure
+- No opinions, just neutral reporting
+- No acknowledgment of uncertainty or mixed feelings
+- No first-person perspective when appropriate
+- No humor, no edge, no personality
+- Reads like a Wikipedia article or press release
+
+### Procedural Steps for "Add Soul"
+
+Do not simply remove patterns—actively inject voice:
+
+1. **Identify one opinion** the writer might have about the topic. Add it.
+2. **Vary sentence rhythm**: After a long sentence, add a short one.
+3. **Add a specific sensory or concrete detail** (names, dates, numbers, sensory observations).
+4. **Include one mild contradiction or complexity acknowledgment**: "It's impressive, but also unsettling."
+5. **Use first-person voice** where it fits naturally: "I keep thinking about...", "Here's what gets me..."
+6. **Allow slight imperfection**: A tangent, an aside, or an unfinished thought.
+
+### Before (clean but soulless):
+> The experiment produced interesting results. The agents generated 3 million lines of code. Some developers were impressed while others were skeptical. The implications remain unclear.
+
+### After (has a pulse):
+> I genuinely don't know how to feel about this one. 3 million lines of code, generated while the humans presumably slept. Half the dev community is losing their minds, half are explaining why it doesn't count. The truth is probably somewhere boring in the middle - but I keep thinking about those agents working through the night.
+
+---
+
+## Cross-References to Other Skills
+
+| Skill | Interaction |
+|-------|-------------|
+| **rubber-ducking** | Use before humanizing: verbalize what the text is trying to say to identify core message vs. AI padding |
+| **decision-matrix** | Use when deciding between multiple rewrite options—weight criteria by context mode |
+| **chestertons-fence** | Before removing a pattern the author introduced, understand why it was written that way |
+| **map-vs-territory** | Verify the "humanized" output actually sounds natural—run it past original audience if possible |
+| **systems-thinking** | Consider downstream effects of tone changes—does removing all hedging create false certainty? |
+
+---
+
+## CONTENT PATTERNS
 
 Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as obvious as slop. Good writing has a human behind it.
 
@@ -74,7 +184,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ## CONTENT PATTERNS
 
-### 1. Undue Emphasis on Significance, Legacy, and Broader Trends
+### 1. Undue Emphasis on Significance, Legacy, and Broader Trends [TIER 1]
 
 **Words to watch:** stands/serves as, is a testament/reminder, a vital/significant/crucial/pivotal/key role/moment, underscores/highlights its importance/significance, reflects broader, symbolizing its ongoing/enduring/lasting, contributing to the, setting the stage for, marking/shaping the, represents/marks a shift, key turning point, evolving landscape, focal point, indelible mark, deeply rooted
 
@@ -88,7 +198,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 2. Undue Emphasis on Notability and Media Coverage
+### 2. Undue Emphasis on Notability and Media Coverage [TIER 2]
 
 **Words to watch:** independent coverage, local/regional/national media outlets, written by a leading expert, active social media presence
 
@@ -102,7 +212,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 3. Superficial Analyses with -ing Endings
+### 3. Superficial Analyses with -ing Endings [TIER 2]
 
 **Words to watch:** highlighting/underscoring/emphasizing..., ensuring..., reflecting/symbolizing..., contributing to..., cultivating/fostering..., encompassing..., showcasing...
 
@@ -116,7 +226,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 4. Promotional and Advertisement-like Language
+### 4. Promotional and Advertisement-like Language [TIER 1]
 
 **Words to watch:** boasts a, vibrant, rich (figurative), profound, enhancing its, showcasing, exemplifies, commitment to, natural beauty, nestled, in the heart of, groundbreaking (figurative), renowned, breathtaking, must-visit, stunning
 
@@ -130,7 +240,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 5. Vague Attributions and Weasel Words
+### 5. Vague Attributions and Weasel Words [TIER 2]
 
 **Words to watch:** Industry reports, Observers have cited, Experts argue, Some critics argue, several sources/publications (when few cited)
 
@@ -144,7 +254,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 6. Outline-like "Challenges and Future Prospects" Sections
+### 6. Outline-like "Challenges and Future Prospects" Sections [TIER 2]
 
 **Words to watch:** Despite its... faces several challenges..., Despite these challenges, Challenges and Legacy, Future Outlook
 
@@ -160,7 +270,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ## LANGUAGE AND GRAMMAR PATTERNS
 
-### 7. Overused "AI Vocabulary" Words
+### 7. Overused "AI Vocabulary" Words [TIER 1]
 
 **High-frequency AI words:** Additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, highlight (verb), interplay, intricate/intricacies, key (adjective), landscape (abstract noun), pivotal, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant
 
@@ -174,7 +284,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 8. Avoidance of "is"/"are" (Copula Avoidance)
+### 8. Avoidance of "is"/"are" (Copula Avoidance) [TIER 2]
 
 **Words to watch:** serves as/stands as/marks/represents [a], boasts/features/offers [a]
 
@@ -188,7 +298,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 9. Negative Parallelisms
+### 9. Negative Parallelisms [TIER 2]
 
 **Problem:** Constructions like "Not only...but..." or "It's not just about..., it's..." are overused.
 
@@ -200,7 +310,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 10. Rule of Three Overuse
+### 10. Rule of Three Overuse [TIER 2]
 
 **Problem:** LLMs force ideas into groups of three to appear comprehensive.
 
@@ -212,7 +322,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 11. Elegant Variation (Synonym Cycling)
+### 11. Elegant Variation (Synonym Cycling) [TIER 3]
 
 **Problem:** AI has repetition-penalty code causing excessive synonym substitution.
 
@@ -224,7 +334,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 12. False Ranges
+### 12. False Ranges [TIER 3]
 
 **Problem:** LLMs use "from X to Y" constructions where X and Y aren't on a meaningful scale.
 
@@ -238,7 +348,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ## STYLE PATTERNS
 
-### 13. Em Dash Overuse
+### 13. Em Dash Overuse [TIER 1]
 
 **Problem:** LLMs use em dashes (—) more than humans, mimicking "punchy" sales writing.
 
@@ -250,7 +360,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 14. Overuse of Boldface
+### 14. Overuse of Boldface [TIER 3]
 
 **Problem:** AI chatbots emphasize phrases in boldface mechanically.
 
@@ -262,7 +372,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 15. Inline-Header Vertical Lists
+### 15. Inline-Header Vertical Lists [TIER 3]
 
 **Problem:** AI outputs lists where items start with bolded headers followed by colons.
 
@@ -276,7 +386,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 16. Title Case in Headings
+### 16. Title Case in Headings [TIER 3]
 
 **Problem:** AI chatbots capitalize all main words in headings.
 
@@ -288,7 +398,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 17. Emojis
+### 17. Emojis [TIER 3]
 
 **Problem:** AI chatbots often decorate headings or bullet points with emojis.
 
@@ -302,9 +412,10 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 18. Curly Quotation Marks
+### 18. Curly Quotation Marks [DEPRECATED]
 
 **Problem:** ChatGPT uses curly quotes ("...") instead of straight quotes ("...").
+**Status:** Deprecated—this is a formatting issue, not a writing style issue.
 
 **Before:**
 > He said "the project is on track" but others disagreed.
@@ -316,7 +427,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ## COMMUNICATION PATTERNS
 
-### 19. Collaborative Communication Artifacts
+### 19. Collaborative Communication Artifacts [TIER 3]
 
 **Words to watch:** I hope this helps, Of course!, Certainly!, You're absolutely right!, Would you like..., let me know, here is a...
 
@@ -330,11 +441,12 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 20. Knowledge-Cutoff Disclaimers
+### 20. Knowledge-Cutoff Disclaimers [DEPRECATED]
 
 **Words to watch:** as of [date], Up to my last training update, While specific details are limited/scarce..., based on available information...
 
 **Problem:** AI disclaimers about incomplete information get left in text.
+**Status:** Deprecated—AI models now have current training data; these disclaimers are obsolete.
 
 **Before:**
 > While specific details about the company's founding are not extensively documented in readily available sources, it appears to have been established sometime in the 1990s.
@@ -344,7 +456,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 21. Sycophantic/Servile Tone
+### 21. Sycophantic/Servile Tone [TIER 1]
 
 **Problem:** Overly positive, people-pleasing language.
 
@@ -358,7 +470,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ## FILLER AND HEDGING
 
-### 22. Filler Phrases
+### 22. Filler Phrases [TIER 1]
 
 **Before → After:**
 - "In order to achieve this goal" → "To achieve this"
@@ -370,9 +482,10 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 23. Excessive Hedging
+### 23. Excessive Hedging [TIER 3]
 
 **Problem:** Over-qualifying statements.
+**Note:** In academic writing, appropriate hedging is correct. Do not over-strip hedging in scholarly contexts.
 
 **Before:**
 > It could potentially possibly be argued that the policy might have some effect on outcomes.
@@ -382,7 +495,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 24. Generic Positive Conclusions
+### 24. Generic Positive Conclusions [TIER 2]
 
 **Problem:** Vague upbeat endings.
 
@@ -394,11 +507,13 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-## Self-Improvement Protocol
+## Self-Improvement Protocol (Optional)
 
-The humanizer skill continuously improves by logging corrections, tracking emerging patterns, and promoting validated learnings into persistent knowledge.
+The self-improvement protocol is **optional**. Enable it only if you want the skill to learn from corrections over time. For one-off uses or simple humanizations, skip logging entirely.
 
-### Learning Directory Structure
+### Enabling Self-Improvement
+
+To activate logging, create the `.learnings/` directory:
 
 ```
 .learnings/
@@ -407,6 +522,8 @@ The humanizer skill continuously improves by logging corrections, tracking emerg
 ├── PATTERNS.md       # Emerging and promoted patterns
 └── REVIEW.md         # Review queue and promotion decisions
 ```
+
+If `.learnings/` does not exist, skip the logging sections below entirely.
 
 ### Trigger Conditions for Logging
 
@@ -499,46 +616,24 @@ Before scanning a new document:
 3. Apply learned patterns alongside the 24 core categories
 4. Mark any conflicts between learned patterns and core categories
 
-### Example Self-Improvement Flow
-
-```
-Document processed: "AI startup landing page"
-Changes made: Removed "leverage", "cutting-edge", "game-changer"
-               Fixed em dash overuse
-               Added specific metric instead of vague "impact"
-
-Review:
-- "leverage" + "cutting-edge" + "game-changer" = 3 AI marketing phrases
-- This is a new pattern: "AI startup pitch vocabulary"
-- Not in existing categories
-
-Logging:
-→ Added to CORRECTIONS.md with note about startup pitch context
-→ Added to PATTERNS.md as "Tech startup promotional vocabulary" [emerging]
-
-Later review:
-→ 5 similar corrections logged
-→ Pattern promoted to LEARNINGS.md
-→ Added as note to Category 4 (Promotional Language)
-```
-
 ---
 
 ## Process
 
-1. Read the input text carefully
-2. Check `.learnings/` for relevant context-specific patterns
-3. Identify all instances of the 24 core patterns plus learned patterns
-4. Rewrite each problematic section
-5. Ensure the revised text:
+1. **Determine context mode**: Academic, Casual, Technical, or Marketing
+2. **Check `.learnings/`** (if enabled) for relevant context-specific patterns
+3. **Identify patterns by severity tier**: Address Tier 1 (High) first, then Tier 2 (Medium), then Tier 3 (Low)
+4. **Rewrite problematic sections**: Apply fixes according to context mode and tier
+5. **Add soul**: Inject personality per the procedural steps
+6. **Resolve conflicts**: Use Pattern Conflict Detection guidance
+7. **Ensure the revised text**:
    - Sounds natural when read aloud
    - Varies sentence structure naturally
    - Uses specific details over vague claims
    - Maintains appropriate tone for context
    - Uses simple constructions (is/are/has) where appropriate
-6. Evaluate if this session generated any logging-worthy corrections
-7. Log corrections per the Self-Improvement Protocol if applicable
-8. Present the humanized version
+8. **Evaluate if this session generated any logging-worthy corrections** (if self-improvement enabled)
+9. **Present the humanized version**
 
 ---
 
@@ -560,13 +655,13 @@ Provide:
 > The software update adds batch processing, keyboard shortcuts, and offline mode. Early feedback from beta testers has been positive, with most reporting faster task completion.
 
 **Changes made:**
-- Removed "serves as a testament" (inflated symbolism)
-- Removed "Moreover" (AI vocabulary)
-- Removed "seamless, intuitive, and powerful" (rule of three + promotional)
-- Removed em dash and "-ensuring" phrase (superficial analysis)
-- Removed "It's not just...it's..." (negative parallelism)
-- Removed "Industry experts believe" (vague attribution)
-- Removed "pivotal role" and "evolving landscape" (AI vocabulary)
+- Removed "serves as a testament" (inflated significance - Tier 1)
+- Removed "Moreover" (AI vocabulary - Tier 1)
+- Removed "seamless, intuitive, and powerful" (rule of three + promotional - Tier 2)
+- Removed em dash and "-ensuring" phrase (em dash overuse - Tier 1)
+- Removed "It's not just...it's..." (negative parallelism - Tier 2)
+- Removed "Industry experts believe" (vague attribution - Tier 2)
+- Removed "pivotal role" and "evolving landscape" (AI vocabulary - Tier 1)
 - Added specific features and concrete feedback
 
 ---
@@ -580,6 +675,17 @@ Key insight from Wikipedia: "LLMs use statistical algorithms to guess what shoul
 ---
 
 ## Changelog
+
+### 4.0.0
+- Added severity tiers (High/Medium/Low impact patterns)
+- Added context modes (Academic, Casual, Technical, Marketing)
+- Added "When NOT to Use" section
+- Added pattern conflict detection guidance
+- Improved "Add Soul" with procedural steps
+- Added cross-references to other skills
+- Simplified self-improvement: made optional, reduced complexity
+- Deprecated obsolete patterns (curly quotes, knowledge-cutoff disclaimers)
+- Reorganized to prioritize high-impact patterns first
 
 ### 3.0.0
 - Added self-improvement protocol with `.learnings/` directory
