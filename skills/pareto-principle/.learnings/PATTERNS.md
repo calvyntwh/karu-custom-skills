@@ -1,0 +1,2 @@
+# pareto-principle Patterns
+---

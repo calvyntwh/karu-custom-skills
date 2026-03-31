@@ -72,5 +72,47 @@ def reverse(arr):
 
 **Result:** Bug caught *before* running. No runtime error wasted.
 
+## Self-Improvement Protocol
+
+This skill learns which logical explanations catch bugs.
+
+### Logging Corrections
+
+After Rubber Ducking:
+
+**Log to `.learnings/CORRECTIONS.md`:**
+```markdown
+## [YYYY-MM-DD] {Brief Description}
+
+**Code segment:** {what was explained}
+**Translation error:** {what was wrong in the English explanation}
+**Bug caught/released:** {did ducking catch it?}
+**Pattern type:** {off-by-one | logic error | wrong assumption}
+---
+```
+
+### Trigger Conditions
+
+| Condition | Example | Log? |
+|-----------|---------|------|
+| Translation revealed bug | "Explaining it made the error obvious" | ✅ |
+| Missed bug in translation | "Should have caught that" | ✅ |
+| False positive | "The translation was confusing but code was right" | ✅ |
+| Goal mismatch caught | "Code didn't actually match user's intent" | ✅ |
+| Off-by-one found | "The loop boundary was wrong" | ✅ |
+
+### Pattern Categories for This Skill
+
+- **Off-by-one errors**: Loop boundaries, index handling
+- **State machine bugs**: Transitions missed
+- **Conditional logic errors**: Wrong branch taken
+- **Business logic mismatches**: Code vs intent misalignment
+- **Type coercion issues**: JavaScript truthy/falsy surprises
+- **Scope errors**: Closures, this binding
+
+### Review & Promote
+
+**Weekly:** Check for recurring bug patterns → Add to LEARNINGS.md
+
 ## Resources
 *   [Detailed Research Notes](references/research.md)

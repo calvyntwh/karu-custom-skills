@@ -42,3 +42,45 @@ If Map $\neq$ Territory, **The Map is Wrong.**
 *   Update the docs/comments.
 *   Rename the variable (`isValid` -> `shouldBeValid`).
 *   Fix the mental model.
+
+## Self-Improvement Protocol
+
+This skill learns documentation-to-reality discrepancies.
+
+### Logging Corrections
+
+After applying Map vs Territory:
+
+**Log to `.learnings/CORRECTIONS.md`:**
+```markdown
+## [YYYY-MM-DD] {Brief Description}
+
+**Map (what was believed):** {doc/comment/variable}
+**Territory (reality):** {what actually happened}
+**Discrepancy type:** {outdated | wrong | misleading}
+**Fix applied:** {what was corrected}
+---
+```
+
+### Trigger Conditions
+
+| Condition | Example | Log? |
+|-----------|---------|------|
+| Doc was outdated | "Comment said X but code was Y" | ✅ |
+| Variable name lied | "`isValid` was actually always false" | ✅ |
+| API differed from docs | "API returned error, docs said 200" | ✅ |
+| Type annotation wrong | "Type said User, runtime was Dict" | ✅ |
+| Comment was misleading | "The comment had it backwards" | ✅ |
+| Map was correct | "Actually the code was wrong, not the doc" | ✅ |
+
+### Pattern Categories for This Skill
+
+- **Outdated docs**: Old behavior, deprecated features
+- **Naming lies**: isValid, canDo, hasAccess patterns
+- **API drift**: Docs vs implementation diverged
+- **Type annotation errors**: TypeScript/Java types wrong
+- **Comment rot**: Comments never updated
+
+### Review & Promote
+
+**Weekly:** Check for recurring discrepancy patterns → Add to LEARNINGS.md

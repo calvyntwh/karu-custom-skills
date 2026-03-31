@@ -61,5 +61,47 @@ if (user && user.id && user.id !== 0) { ... } // Ugly!
 *   `user?.id` would return `0` (falsy), blocking admins.
 *   **Action:** KEEP the check. Update the comment: `// strict check needed for Legacy API id:0 admins`.
 
+## Self-Improvement Protocol
+
+This skill learns from corrections to improve future fence detection.
+
+### Logging Corrections
+
+After applying Chesterton's Fence protocol, if you discover or miss a fence:
+
+**Log to `.learnings/CORRECTIONS.md`:**
+```markdown
+## [YYYY-MM-DD] {Brief Description}
+
+**Code in question:** "{the code}"
+**Decision made:** {DELETE | KEEP | FLAGGED}
+**Outcome:** {what happened}
+**Pattern:** {what type of fence this was}
+---
+```
+
+### Trigger Conditions
+
+| Condition | Example | Log? |
+|-----------|---------|------|
+| Deleted code that later caused bug | "Shouldn't have deleted that null check" | ✅ |
+| Kept code that turned out obsolete | "The edge case no longer exists" | ✅ |
+| Found the reason via git archaeology | "Found the bug this prevented" | ✅ |
+| Missed an obvious fence | "That 'ugly' code was load-bearing" | ✅ |
+| False positive flagged | "The fence wasn't actually there" | ✅ |
+
+### Pattern Categories for This Skill
+
+- **Edge case guards**: Null checks, undefined checks, boundary conditions
+- **Legacy compatibility**: Old API behaviors, deprecated format handling
+- **Security fences**: Auth checks, permission validations
+- **Race condition guards**: Locks, atomic operations, synchronization
+- **Bug workarounds**: Hacks that fix specific known bugs
+- **Performance optimizations**: Caching, memoization, early returns
+
+### Review & Promote
+
+**Weekly:** Check CORRECTIONS.md for 3+ instances of same pattern → Promote to LEARNINGS.md
+
 ## Resources
 *   [Detailed Research Notes](references/research.md)

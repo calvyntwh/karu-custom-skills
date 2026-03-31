@@ -49,5 +49,46 @@ First Principles Thinking is a mode of inquiry that relentlessly questions assum
 > **Analogy (Cook):** Follows a recipe. If an ingredient is missing, they stop.
 > **First Principles (Chef):** Understands *why* the acid balances the fat. If a lemon is missing, they use vinegar, because the *principle* is acidity.
 
+## Self-Improvement Protocol
+
+This skill learns to identify assumptions more accurately and find better atomic truths.
+
+### Logging Corrections
+
+After applying First Principles Thinking:
+
+**Log to `.learnings/CORRECTIONS.md`:**
+```markdown
+## [YYYY-MM-DD] {Brief Description}
+
+**Problem:** {the original problem}
+**Assumption challenged:** {what was assumed}
+**Breakthrough:** {the actual truth found}
+**Outcome:** {did it work?}
+---
+```
+
+### Trigger Conditions
+
+| Condition | Example | Log? |
+|-----------|---------|------|
+| Found a false assumption | "Turns out X was actually Y" | ✅ |
+| Missed obvious assumption | "Should have questioned Z earlier" | ✅ |
+| Wrong atomic unit | "The 'atomic' unit had substructure" | ✅ |
+| Analogical reasoning was right | "Standard approach actually worked" | ✅ |
+| Novel solution found | "Never seen this approach before" | ✅ |
+
+### Pattern Categories for This Skill
+
+- **Assumption patterns**: Common beliefs that are usually wrong
+- **Atomic unit types**: Physics, Logic, Economics breakdowns
+- **Questioning depth**: How many "whys" needed
+- **Analogy failures**: When analogies mislead vs help
+- **Constraint types**: Physical vs logical vs economic
+
+### Review & Promote
+
+**Weekly:** Check for recurring assumption patterns → Add to LEARNINGS.md
+
 ## Resources
 *   [Detailed Research Notes](references/research.md)

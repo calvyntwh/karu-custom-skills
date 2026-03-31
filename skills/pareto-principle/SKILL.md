@@ -37,3 +37,44 @@ Score = $V / E$ (Value divided by Effort).
 | **Core Payment API** | 10 | 5 | **2.0** | **BUILD** |
 | **Dark Mode** | 3 | 2 | 1.5 | DEFER |
 | **Animated Logo** | 1 | 8 | 0.1 | **DELETE** |
+
+## Self-Improvement Protocol
+
+This skill learns which prioritization decisions work out.
+
+### Logging Corrections
+
+After applying Pareto Principle:
+
+**Log to `.learnings/CORRECTIONS.md`:**
+```markdown
+## [YYYY-MM-DD] {Brief Description}
+
+**Task prioritized:** {what was chosen}
+**Task deferred/deleted:** {what was not done}
+**Outcome:** {did the prioritization work?}
+**Value estimate accuracy:** {was the V rating correct?}
+---
+```
+
+### Trigger Conditions
+
+| Condition | Example | Log? |
+|-----------|---------|------|
+| Defer was wrong | "Should have built Dark Mode first" | ✅ |
+| Delete was wrong | "The 'trivial' feature was actually important" | ✅ |
+| Value estimate off | "Users didn't care about the 'core' feature" | ✅ |
+| Effort estimate wrong | "Thought it was 2, turned out to be 10" | ✅ |
+| 80/20 was wrong | "The 20% wasn't the vital one" | ✅ |
+
+### Pattern Categories for This Skill
+
+- **Value misprediction**: What users actually want vs what we thought
+- **Effort estimation errors**: Complexity surprises
+- **Scope creep patterns**: When deferral became permanent
+- **ROI calculation errors**: Wrong V/E assumptions
+- **Feature dependencies**: Tasks that blocked others
+
+### Review & Promote
+
+**Weekly:** Check CORRECTIONS.md → Promote validated patterns to LEARNINGS.md

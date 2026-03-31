@@ -79,5 +79,46 @@ Present the matrix and state the winner with reasoning.
 
 **Recommendation:** "Vue scores highest (40) primarily due to its excellent Learning Curve score, which you rated as Critical."
 
+## Self-Improvement Protocol
+
+This skill learns from decisions to improve future trade-off analysis.
+
+### Logging Corrections
+
+After a decision made using this matrix:
+
+**Log to `.learnings/CORRECTIONS.md`:**
+```markdown
+## [YYYY-MM-DD] {Brief Description}
+
+**Decision:** {what was chosen}
+**Outcome:** {how did it turn out? Correct or wrong?}
+**Criteria accuracy:** {were the weights right?}
+**Pattern:** {lessons learned}
+---
+```
+
+### Trigger Conditions
+
+| Condition | Example | Log? |
+|-----------|---------|------|
+| Chose option that failed | "The winner turned out to be wrong" | ✅ |
+| Weights were wrong | "Should have weighted learning curve higher" | ✅ |
+| Missing criteria discovered | "Security should have been a criteria" | ✅ |
+| Outcome matched prediction | "Framework held up well under load" | ✅ |
+| False positive | "Matrix said X but Y was clearly better" | ✅ |
+
+### Pattern Categories for This Skill
+
+- **Weight calibration errors**: Over/under weighting criteria
+- **Missing criteria**: Security, team familiarity, maintenance
+- **Score accuracy**: Model predictions vs reality
+- **Bias patterns**: Popularity bias, anchoring bias
+- **Context failures**: Criteria that worked in one context but not another
+
+### Review & Promote
+
+**Monthly:** Check CORRECTIONS.md → Promote validated patterns to LEARNINGS.md
+
 ## Resources
 *   [Detailed Research Notes](references/research.md)

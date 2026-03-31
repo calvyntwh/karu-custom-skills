@@ -1,0 +1,2 @@
+# rubber-ducking Patterns
+---

@@ -42,3 +42,44 @@ Actively remove the unnecessary components.
 Does the *bare metal* system still solve the user's Core Problem?
 *   If YES: You are done.
 *   If NO: Restore only the *minimum* necessary piece.
+
+## Self-Improvement Protocol
+
+This skill learns which simplifications work and which cause problems.
+
+### Logging Corrections
+
+After applying Occam's Razor:
+
+**Log to `.learnings/CORRECTIONS.md`:**
+```markdown
+## [YYYY-MM-DD] {Brief Description}
+
+**Simplification made:** {what was removed/simplified}
+**Safety check used:** {grep | tests | chesterton}
+**Outcome:** {still works | caused bug | needed restoration}
+**Complexity indicator:** {what signaled over-engineering}
+---
+```
+
+### Trigger Conditions
+
+| Condition | Example | Log? |
+|-----------|---------|------|
+| Simplification worked | "Removed the abstraction, no problems" | ✅ |
+| Simplification caused bug | "Had to restore that 'overkill' class" | ✅ |
+| False positive | "Actually needed that complexity" | ✅ |
+| Grep test failed | "Was referenced dynamically" | ✅ |
+| Over-pruning | "Removed too much, had to add back" | ✅ |
+
+### Pattern Categories for This Skill
+
+- **Abstraction layers**: When they hide necessary complexity
+- **Passthrough classes**: Manager/Service/Impl that add nothing
+- **Boilerplate indicators**: Long files, deep nesting
+- **Dependency bloat**: Libraries with one function
+- **Premature optimization**: "What if" code
+
+### Review & Promote
+
+**Weekly:** Check for recurring simplification patterns → Add to LEARNINGS.md

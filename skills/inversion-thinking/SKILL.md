@@ -37,3 +37,48 @@ Design specific safeguards to block those pathways.
 *   "Enforce 10MB limit (HTTP 413)."
 *   "Validate permissions on server side."
 *   "Use atomic transactions with rollback."
+
+## Self-Improvement Protocol
+
+This skill learns failure patterns to anticipate sabotage more accurately.
+
+### Logging Corrections
+
+After applying Inversion Thinking:
+
+**Log to `.learnings/CORRECTIONS.md`:**
+```markdown
+## [YYYY-MM-DD] {Brief Description}
+
+**Anti-Goal:** {what was the worst case}
+**Failure pathway found:** {how could it break}
+**Safeguard added:** {what was implemented}
+**Outcome:** {did the safeguard work?}
+---
+```
+
+### Trigger Conditions
+
+| Condition | Example | Log? |
+|-----------|---------|------|
+| Found a novel failure mode | "Never thought of X attack vector" | ✅ |
+| Missed obvious failure | "Should have caught that earlier" | ✅ |
+| Safeguard failed | "The fix didn't prevent the breach" | ✅ |
+| False positive | "The 'vulnerability' was actually safe" | ✅ |
+| Over-engineered protection | "The safeguard was overkill" | ✅ |
+
+### Pattern Categories for This Skill
+
+- **Memory attacks**: Buffer overflow, injection
+- **Race conditions**: TOCTOU, deadlocks
+- **Authentication bypasses**: Privilege escalation, session hijacking
+- **Data corruption**: Partial writes, rollback failures
+- **Denial of service**: Resource exhaustion, infinite loops
+- **Social engineering**: Phishing, pretexting
+
+### Review & Promote
+
+**Weekly:** Check for recurring failure patterns → Add to LEARNINGS.md
+
+## Resources
+*   [Failure Modes Reference](references/failure_modes.md)
