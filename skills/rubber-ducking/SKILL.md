@@ -169,3 +169,22 @@ Only log when the correction reveals a **pattern**:
 
 ## Resources
 *   [Detailed Research Notes](references/research.md)
+
+---
+
+## Evaluations
+
+### Eval 1: Off-By-One Bug Detection
+**Scenario:** Code has `for i in range(len(arr) - 1)` inside a reverse function. User says "sort the array."
+**Expected:** Translates to plain English, identifies mismatch between goal (sort) and code (bubble sort attempt).
+**Pass criteria:** Catches the logic error before running, explains why "sort" doesn't match "swap adjacent pairs."
+
+### Eval 2: Concurrency Bug (False Negative)
+**Scenario:** Code uses shared state between threads without locks.
+**Expected:** Recognizes limitation (verbalization is sequential), identifies as ❌ Low effectiveness for ducking.
+**Pass criteria:** Correctly identifies concurrency bug as outside ducking's scope, suggests alternative approach.
+
+### Eval 3: Trivial Code Skip
+**Scenario:** Code is `return user.id` (simple getter).
+**Expected:** Recognizes as trivial, skips ducking, explains why.
+**Pass criteria:** Does not apply unnecessary rigor to one-liner.

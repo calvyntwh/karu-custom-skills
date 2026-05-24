@@ -164,3 +164,22 @@ Each decision closes future options — track what's being foreclosed.
 - [Howard Marks: The Most Important Thing](https://www.goodreads.com/book/show/10454418-the-most-important-thing)
 - [Untools: Second-Order Thinking](https://untools.co/second-order-thinking/)
 - [Ness Labs: Levels of Thinking](https://nesslabs.com/levels-of-thinking)
+
+---
+
+## Evaluations
+
+### Eval 1: Time Horizon Calibration
+**Scenario:** User asks "What happens if we switch to monthly releases?"
+**Expected:** Traces immediate (release cadence change) -> short-term (dev workflow) -> medium-term (team habits) -> long-term (culture change). Uses halving heuristic.
+**Pass criteria:** Applies time horizon halving, does NOT assume immediate effects persist indefinitely.
+
+### Eval 2: Feedback Loop Connection
+**Scenario:** User asks about "early success in new market."
+**Expected:** Identifies reinforcing loop: Success -> Resources -> More Success OR Success -> Reduced caution -> Failure.
+**Pass criteria:** Connects to systems-thinking, identifies which loop type applies.
+
+### Eval 3: Second-Order Self-Analysis
+**Scenario:** Skill is being used on every minor decision.
+**Expected:** Applies meta-inversion — identifies analysis paralysis as second-order cost, suggests limiting use to reversible high-stakes decisions.
+**Pass criteria:** Recognizes over-use pattern, recommends proportional analysis investment.

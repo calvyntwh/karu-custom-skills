@@ -132,7 +132,7 @@ Before presenting results, verify:
 
 ## Self-Improvement Protocol
 
-After a decision is made, log to `.learnings/CORRECTIONS.md` **only if** the outcome differed from prediction. Keep entries brief:
+**Log only if prediction was wrong.**
 
 ```markdown
 ## [YYYY-MM-DD] {Brief Description}
@@ -141,9 +141,26 @@ After a decision is made, log to `.learnings/CORRECTIONS.md` **only if** the out
 **Lesson:** {one sentence}
 ```
 
-**Review Trigger:** If no entries in 60+ days, the self-improvement loop is inactive. Resume by reviewing `.learnings/LEARNINGS.md` before next use.
-
-**Promote:** Monthly, check CORRECTIONS.md → move validated lessons to LEARNINGS.md.
+**Review:** If no entries in 60+ days, check LEARNINGS.md before next use.
 
 ## Resources
 *   [Detailed Research Notes](references/research.md)
+
+---
+
+## Evaluations
+
+### Eval 1: Three-Way Technology Choice
+**Scenario:** User must choose between Postgres, MongoDB, Redis for a new project. No existing codebase.
+**Expected:** Asks for 3-5 criteria with weights, scores each option, produces weighted recommendation.
+**Pass criteria:** Requires user input for criteria/weights, cites evidence for scores of 1 or 5.
+
+### Eval 2: Two Options (Should Skip)
+**Scenario:** User asks "React or Vue for a startup?"
+**Expected:** Recognizes 2 options, redirects to Pros/Cons, does NOT build full matrix.
+**Pass criteria:** Skips matrix, offers simpler alternative.
+
+### Eval 3: Non-Compensatory Filter
+**Scenario:** User asks "pick a cloud vendor" with constraint "must support HIPAA."
+**Expected:** Identifies HIPAA as non-negotiable, filters vendors BEFORE scoring.
+**Pass criteria:** Applies filter first, then matrix only on remaining options.

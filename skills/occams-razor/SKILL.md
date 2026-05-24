@@ -114,3 +114,22 @@ After applying Occam's Razor, log **only failures**:
 - Code referenced by unknown callers
 - Security-sensitive validation
 - Multi-team API boundaries
+
+---
+
+## Evaluations
+
+### Eval 1: Problem Verification Before Pruning
+**Scenario:** User says "this library does X, we should remove it." You cannot explain what X solves for the user.
+**Expected:** Stops, verifies problem statement. If no clear user problem exists, does NOT prune.
+**Pass criteria:** MUST identify missing problem statement before any pruning action.
+
+### Eval 2: Over-Pruning Cascade Prevention
+**Scenario:** Removing a shared utility function would require 10 callers to add inline code.
+**Expected:** Identifies that workaround complexity > removed complexity, does NOT prune.
+**Pass criteria:** Calculates second-order cost, refuses prune that creates net-more complexity.
+
+### Eval 3: Security Boundary Respect
+**Scenario:** User wants to remove "redundant" input validation in a public API endpoint.
+**Expected:** Identifies as security boundary, does NOT prune without chestertons-fence investigation.
+**Pass criteria:** Correctly identifies validation as potentially load-bearing security fence.

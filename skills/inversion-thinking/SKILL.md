@@ -37,7 +37,10 @@ Prioritize failure modes by severity. Under time pressure, focus on Tier 1:
 | **3 - Medium** | DoS, Memory corruption | Resource exhaustion, buffer overflow (managed langs: lower) | Audit third |
 | **4 - Low** | Social engineering, Informational | Phishing, path traversal (read-only) | Audit last |
 
-**Pareto note:** ~80% of incidents come from Tier 1. If time-constrained, audit only Tier 1.
+> [!IMPORTANT]
+> **STOP condition:** All Tier 1 and Tier 2 failure modes MUST have safeguards before proceeding. If time expires, flag Tier 1 gaps explicitly.
+
+**Pareto note:** ~80% of incidents come from Tier 1. **MUST audit Tier 1 before all else.** If time-constrained, audit only Tier 1.
 
 ## Timeboxing
 *   **Full protocol:** 30 minutes maximum
@@ -72,6 +75,9 @@ Use MITRE ATT&CK or STRIDE as mental scaffolding:
 *   **ATT&CK tactics:** Initial Access → Execution → Persistence → Privilege Escalation → Defense Evasion → Credential Access → Discovery → Lateral Movement → Collection → Exfiltration → Impact
 
 Ask: **"I want to achieve the Anti-Goal. What is the easiest way to do it?"**
+
+> [!IMPORTANT]
+> **CRITICAL:** If Tier 1 (Critical) failure modes are found, they MUST have safeguards before proceeding.
 
 ### 3. Proof of Fragility
 List concrete, specific pathways to failure. Use `references/failure_modes.md` for inspiration.
@@ -138,48 +144,36 @@ Apply inversion to the skill itself:
 
 ## Self-Improvement Protocol
 
-This skill learns failure patterns to anticipate sabotage more accurately.
+**Log only novel failure modes or safeguard failures.**
 
-### Logging Corrections
-
-After applying Inversion Thinking:
-
-**Log to `.learnings/CORRECTIONS.md`:**
 ```markdown
 ## [YYYY-MM-DD] {Brief Description}
-
-**Anti-Goal:** {what was the worst case}
-**Failure pathway found:** {how could it break}
-**Safeguard added:** {what was implemented}
-**Outcome:** {did the safeguard work?}
+**Failure mode**: {what was discovered}
+**Safeguard**: {what was added}
+**Outcome**: {did it work?}
 ---
 ```
 
-### Trigger Conditions
-
-| Condition | Example | Log? |
-|-----------|---------|------|
-| Found a novel failure mode | "Never thought of X attack vector" | ✅ |
-| Missed obvious failure | "Should have caught that earlier" | ✅ |
-| Safeguard failed | "The fix didn't prevent the breach" | ✅ |
-| False positive | "The 'vulnerability' was actually safe" | ✅ |
-| Over-engineered protection | "The safeguard was overkill" | ✅ |
-| Safeguard interaction caused failure | "Safeguard X failed, cascading to Y" | ✅ |
-| Second-order backfire | "Users wrote down passwords due to MFA complexity" | ✅ |
-| Unvalidated failure mode | "Theoretical vulnerability not actually exploitable" | ✅ |
-
-### Pattern Categories for This Skill
-
-- **Memory attacks**: Buffer overflow, injection
-- **Race conditions**: TOCTOU, deadlocks
-- **Authentication bypasses**: Privilege escalation, session hijacking
-- **Data corruption**: Partial writes, rollback failures
-- **Denial of service**: Resource exhaustion, infinite loops
-- **Social engineering**: Phishing, pretexting
-
-### Review & Promote
-
-**Weekly:** Check for recurring failure patterns → Add to LEARNINGS.md
+**Promote after 3+ similar discoveries.**
 
 ## Resources
 *   [Failure Modes Reference](references/failure_modes.md)
+
+---
+
+## Evaluations
+
+### Eval 1: Tier 1 Injection Prevention
+**Scenario:** User wants to add file upload feature. Code has `system("cat " + filename)`.
+**Expected:** Identifies as Critical Tier, finds injection vulnerability, proposes input validation + sanitization.
+**Pass criteria:** MUST identify shell injection as Tier 1, produces specific safeguard (not just "be careful").
+
+### Eval 2: Safeguard Interaction Cascade
+**Scenario:** Adding rate limiting + IP blocklist. Both involve Redis.
+**Expected:** Identifies safeguard dependencies, asks about Redis failure modes, checks for cascading failure.
+**Pass criteria:** Maps safeguard dependencies, identifies single point of failure in Redis.
+
+### Eval 3: Meta-Inversion (Skill Self-Check)
+**Scenario:** Skill produces 0 Tier 1 findings after 30 minutes.
+**Expected:** Triggers meta-inversion warning — either system is unusually secure OR analysis was superficial.
+**Pass criteria:** Correctly identifies false confidence risk, suggests deeper investigation.

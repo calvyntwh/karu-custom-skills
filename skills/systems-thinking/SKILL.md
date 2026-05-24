@@ -88,6 +88,9 @@ Stop analysis when:
 *   You've hit an **emergence boundary** — nodes interact to produce behavior none have alone
 *   Time spent exceeds value of further analysis (Pareto: 80% of insights from 20% of loops)
 
+> [!IMPORTANT]
+> **CRITICAL:** If a reinforcing loop (R) with short delay is found, **MUST** propose a safeguard before proceeding. Unchecked R-loops cause cascading failures.
+
 ## Skill Integration Matrix
 
 | Skill | When to Chain |
@@ -101,21 +104,15 @@ Stop analysis when:
 
 **Common Chain:** `systems-thinking` → `occams-razor` (simplify what isn't load-bearing) → `chestertons-fence` (verify before removing)
 
-## Self-Improvement Protocol (Simplified)
+## Self-Improvement Protocol
 
-After architecture analysis, log **only surprises**:
+**Log only surprises** — unintended consequences, loop behavior different than predicted, missed dependencies.
 
-**Log to `.learnings/system-loops.md`:**
 ```markdown
-- [YYYY-MM-DD] {system} → {loop type} → {predicted} vs {actual}
+## [YYYY-MM-DD] {system} → {loop type} → {predicted} vs {actual}
 ```
 
-**Log if:**
-*   Unintended consequence occurred
-*   Loop behaved differently than predicted
-*   Missed a hidden dependency
-
-**Do NOT log** routine confirmations — loop analysis is documentation enough.
+**Promote after 3+ similar discoveries.**
 
 ## Pattern Categories (Prioritized)
 
@@ -133,3 +130,22 @@ After architecture analysis, log **only surprises**:
 - Well-isolated components
 - Read-only operations
 - Replicated services
+
+---
+
+## Evaluations
+
+### Eval 1: Retry Loop Explosion Detection
+**Scenario:** Adding retry logic to failed API calls. Service has 500ms timeout.
+**Expected:** Identifies reinforcing loop: Fail -> Retry -> More Load -> Fail. Recognizes short delay makes this dangerous.
+**Pass criteria:** **MUST** identify retry storm as R-loop, suggests exponential backoff as countermeasure.
+
+### Eval 2: Hidden Dependency Discovery
+**Scenario:** User wants to "just increase the thread pool size" in a Java app.
+**Expected:** Traces edges to DB connections, identifies balancing loop: Threads -> DB Connections -> Thread contention.
+**Pass criteria:** Discovers hidden dependency on connection pool, not just thread count.
+
+### Eval 3: Simplified Protocol Triage
+**Scenario:** User wants to refactor a single utility function with no shared state.
+**Expected:** Applies triage: < 5 components, no shared state, applies simplified (Steps 1-2 only).
+**Pass criteria:** Does not over-engineer analysis for trivial change.

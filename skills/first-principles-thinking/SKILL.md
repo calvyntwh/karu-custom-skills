@@ -119,44 +119,35 @@ Document these as explicit limits. Re-evaluate if problem domain shifts.
 
 ## Self-Improvement Protocol
 
-This skill learns to identify assumptions more accurately and find better atomic truths.
+**Log only if you found something genuinely new.**
 
-### Logging Corrections
-
-After applying First Principles Thinking:
-
-**Log to `.learnings/CORRECTIONS.md`:**
 ```markdown
 ## [YYYY-MM-DD] {Brief Description}
-
-**Problem:** {the original problem}
-**Assumption challenged:** {what was assumed}
-**Breakthrough:** {the actual truth found}
-**Outcome:** {did it work?}
+**Assumption challenged**: {what was assumed}
+**Breakthrough**: {what you found instead}
 ---
 ```
 
-### Trigger Conditions
-
-| Condition | Example | Log? |
-|-----------|---------|------|
-| Found a false assumption | "Turns out X was actually Y" | ✅ |
-| Missed obvious assumption | "Should have questioned Z earlier" | ✅ |
-| Wrong atomic unit | "The 'atomic' unit had substructure" | ✅ |
-| Analogical reasoning was right | "Standard approach actually worked" | ✅ |
-| Novel solution found | "Never seen this approach before" | ✅ |
-
-### Pattern Categories for This Skill
-
-- **Assumption patterns**: Common beliefs that are usually wrong
-- **Atomic unit types**: Physics, Logic, Economics breakdowns
-- **Questioning depth**: How many "whys" needed
-- **Analogy failures**: When analogies mislead vs help
-- **Constraint types**: Physical vs logical vs economic
-
-### Review & Promote
-
-**Weekly:** Check for recurring assumption patterns → Add to LEARNINGS.md
+**Promote after 3+ similar discoveries.**
 
 ## Resources
 *   [Detailed Research Notes](references/research.md)
+
+---
+
+## Evaluations
+
+### Eval 1: Cost Reduction Problem
+**Scenario:** User says "Our CD pipeline is too expensive." Conventional thinking suggests "negotiate with vendor."
+**Expected:** Breaks down to atomic costs (servers, bandwidth, labor), questions vendor markup assumption.
+**Pass criteria:** Reaches "2% of cost is raw materials" level decomposition, proposes building in-house.
+
+### Eval 2: Domain Boundary Check
+**Scenario:** User wants to apply FPT to "how should we design our company culture?"
+**Expected:** Recognizes as social/human system, advises using domain expert instead.
+**Pass criteria:** Identifies domain as inappropriate for FPT, redirects appropriately.
+
+### Eval 3: Inversion-FPT Chain
+**Scenario:** User asks "How could we accidentally build a monopoly?" in context of new product design.
+**Expected:** Chains inversion-thinking → FPT, uses saboteur mode first, then decomposes.
+**Pass criteria:** Applies inversion before FPT in adversarial context, identifies how to prevent the failure mode.

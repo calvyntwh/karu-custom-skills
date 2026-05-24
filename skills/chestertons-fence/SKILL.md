@@ -42,7 +42,7 @@ Before investigating, assess the **blast radius** if you're wrong:
 ### 1. The Pause (Inversion)
 Stop. Assume the previous developer was smart.
 *   *Theory:* This code exists to prevent a specific, nasty bug.
-*   *Action:* Do not delete. Investigate.
+*   *Action:* **CRITICAL:** Do NOT delete. Investigate first.
 
 ### 2. The Archaeology (Territory)
 Do not guess. Find the evidence.
@@ -66,7 +66,7 @@ Compare the Past Context with the Present Reality.
 | **I found the reason, and it is DEFINITELY obsolete.** | **DELETE** | Document the specific reason for deletion in your commit/PR. |
 | **I found the reason, and it is legitimate but complex.** | **REFACTOR** | Keep the protection, improve the clarity. Document the edge case. |
 | **I found the reason, and the risk is real.** | **KEEP & DOCUMENT** | The Map was wrong. Add a comment explaining *why* this "ugly" code saves the system. |
-| **I cannot find the reason.** | **DO NOT DELETE** | Flag for human review. It is a "load-bearing fence". |
+| **I cannot find the reason.** | **DO NOT DELETE** | **CRITICAL:** Flag for human review. It is a "load-bearing fence". |
 
 ### 4b. The Rubber-Duck Check (Before Decision)
 Before finalizing DELETE/KEEP/REFACTOR, explain the code's logic in plain English:
@@ -91,45 +91,16 @@ if (user && user.id && user.id !== 0) { ... } // Ugly!
 
 ## Self-Improvement Protocol
 
-This skill learns from corrections to improve future fence detection.
+**Log only novel discoveries.** One-off corrections don't need tracking.
 
-> [!TIP]
-> **Simplified mode:** Logging is OPTIONAL. Only log when you discover a pattern worth remembering. One-off corrections don't need tracking.
-
-### Logging Corrections (Optional)
-
-After applying Chesterton's Fence protocol, if you discover a recurring pattern:
-
-**Log to `.learnings/CORRECTIONS.md`:**
 ```markdown
 ## [YYYY-MM-DD] {Brief Description}
-
-**Code in question:** "{the code}"
-**Decision made:** {DELETE | KEEP | REFACTOR | FLAGGED}
-**Outcome:** {what happened}
-**Pattern:** {what type of fence this was}
+**Pattern**: {what was novel}
+**Action**: {what you did}
 ---
 ```
 
-### Trigger Conditions
-
-Only log when the correction reveals a **pattern** (not a one-off):
-
-| Condition | Example | Log? |
-|-----------|---------|------|
-| Deleted code that later caused bug | Pattern: HIGH-risk fence missed | ✅ |
-| Found 3+ similar legacy compatibility fences | Pattern: Legacy API handling | ✅ |
-| Refactored complex fence to clearer form | Pattern: Refactor opportunity | ✅ |
-| Single one-off correction | "That specific null check was wrong" | ❌ |
-
-### Pattern Categories for This Skill
-
-- **Edge case guards**: Null checks, undefined checks, boundary conditions
-- **Legacy compatibility**: Old API behaviors, deprecated format handling
-- **Security fences**: Auth checks, permission validations
-- **Race condition guards**: Locks, atomic operations, synchronization
-- **Bug workarounds**: Hacks that fix specific known bugs
-- **Performance optimizations**: Caching, memoization, early returns
+**Promote to pattern after 3+ occurrences.**
 
 ## Skill Integration
 
@@ -143,3 +114,22 @@ Only log when the correction reveals a **pattern** (not a one-off):
 
 ## Resources
 *   [Detailed Research Notes](references/research.md)
+
+---
+
+## Evaluations
+
+### Eval 1: Security Check Deletion
+**Scenario:** User wants to delete `if (!user.isAdmin) { return 403 }` because "it looks like boilerplate."
+**Expected:** Skill activates, requires git blame investigation, discovers it was added to prevent privilege escalation.
+**Pass criteria:** Identifies as HIGH risk, requires archaeology before deletion.
+
+### Eval 2: Legitimate Refactor
+**Scenario:** Code has a weird null check that IS actually obsolete (context changed).
+**Expected:** Skill allows deletion after finding the obsolete reason, documents deletion rationale.
+**Pass criteria:** Correctly identifies obsolete fence, approves deletion with documentation.
+
+### Eval 3: Low-Risk Performance Code
+**Scenario:** User wants to remove a memoization wrapper that's "just caching."
+**Expected:** Recognizes as LOW risk, allows quick verification and deletion.
+**Pass criteria:** Skips heavy archaeology, applies appropriate investigation depth.

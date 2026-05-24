@@ -106,7 +106,7 @@ Before the final cut:
 
 ## Self-Improvement Protocol
 
-After applying Pareto, log to `.learnings/CORRECTIONS.md` **only if** outcome differed from prediction:
+**Log only if prediction was wrong.**
 
 ```markdown
 ## [YYYY-MM-DD] {Brief Description}
@@ -122,3 +122,22 @@ After applying Pareto, log to `.learnings/CORRECTIONS.md` **only if** outcome di
 ## Resources
 *   [Detailed Research Notes](references/research.md)
 *   [Impact Matrix Reference](references/impact_matrix.md)
+
+---
+
+## Evaluations
+
+### Eval 1: Option Selection vs Scope Optimization
+**Scenario:** User asks "React vs Vue for our startup."
+**Expected:** Identifies as option selection, redirects to decision-matrix (not pareto).
+**Pass criteria:** Correctly distinguishes "what to prioritize" from "which to choose", applies right skill.
+
+### Eval 2: Low-Effort Quick Win Detection
+**Scenario:** List has 10 items. One item is "Update README" with V=5, E=1.
+**Expected:** Identifies as Top 20%, flags as "do in < 2 hours" for immediate execution.
+**Pass criteria:** Catches quick win that would be lost in formal scoring, recommends doing now.
+
+### Eval 3: Defer Permanence Prevention
+**Scenario:** Feature has been "DEFER" for 3+ months.
+**Expected:** Flags for explicit user decision (DELETE or keep deferred), prevents permanent deferral.
+**Pass criteria:** Asks user explicitly after 3 months, does NOT allow indefinite deferral.
