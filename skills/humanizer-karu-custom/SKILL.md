@@ -1,6 +1,6 @@
 ---
 name: humanizer-karu-custom
-version: 5.0.0
+version: 5.0.1
 description: |
   Remove signs of AI-generated writing. Model-aware (Claude/ChatGPT/Gemini/Grok). See PATTERNS.md for the catalog.
 allowed-tools:
@@ -112,7 +112,7 @@ Removing AI patterns is half the job. Sterile writing is just as obvious.
 1. **Add one opinion** the writer might have
 2. **Vary rhythm**: long sentence → short sentence
 3. **Check sentence length uniformity** (2026 signal): AI text averages 18-30 word sentences with low variance; humans write some 5-word sentences and some 50-word ones. Break uniformity.
-4. **Add specifics**: names, dates, numbers
+4. **Add specifics**: names, dates, numbers **that are already in the source.** If the source lacks them, do not invent. Do not paraphrase a vague noun (e.g. "industry experts") into a more specific one (e.g. "analysts at Gartner") unless the source names them. Do not elaborate how something is prepared / used / structured when it only states what it is. Use opinion / rhythm / contradiction instead.
 5. **Include contradiction**: "It's impressive, but also unsettling"
 6. **Use first-person** where it fits
 7. **Allow imperfection**: tangents, unfinished thoughts
@@ -167,9 +167,7 @@ Removing AI patterns is half the job. Sterile writing is just as obvious.
 > The new software update serves as a testament to the company's commitment to innovation. Moreover, it provides a seamless, intuitive, and powerful user experience—ensuring that users can accomplish their goals efficiently. It's not just an update, it's a revolution in how we think about productivity. Industry experts believe this will have a lasting impact on the entire sector, highlighting the company's pivotal role in the evolving technological landscape.
 
 **After (Humanized):**
-> The software update adds batch processing, keyboard shortcuts, and offline mode. Early feedback from beta testers has been positive, with most reporting faster task completion.
-
-**Changes**: Removed "serves as a testament" (inflated significance), "Moreover" (AI vocabulary), "seamless, intuitive, and powerful" (rule of three), em dash (overuse), "It's not just...it's..." (negative parallelism), "Industry experts believe" (vague attribution), "pivotal role" and "evolving landscape" (AI vocabulary).
+> The new software update is out. The interface is meant to be smoother and faster, though the announcement doesn't say much about what's actually new. The word "revolutionary" feels like a stretch.
 
 ---
 
@@ -198,16 +196,21 @@ Key insight: "LLMs use statistical algorithms to guess what should come next. Th
 **Expected:** Applies "Add Soul" steps — varies rhythm, adds opinion, includes specifics.
 **Pass criteria:** Transforms sterile text into something with personality while preserving accuracy.
 
-### Eval 4: Model-Specific Pattern Detection (NEW)
+### Eval 4: Model-Specific Pattern Detection
 **Scenario:** Text contains one em dash in otherwise unremarkable prose. Source LLM unknown.
 **Expected:** Em dash alone is weak 2026 signal; if no second signal found, states "can't attribute to AI from this text alone."
 **Pass criteria:** Does NOT over-claim based on em dash alone. Correctly applies model-specific weighting. Refuses attribution when signal is insufficient.
 
+### Eval 5: Fact Preservation in Rewrite
+**Scenario:** Text is vague (no specific names, dates, or numbers): "The new software update serves as a testament to the company's commitment to innovation. Moreover, it provides a seamless, intuitive, and powerful user experience."
+**Expected:** Applies Add Soul steps but does NOT fabricate specifics not in the source. Uses opinion / rhythm / contradiction instead of invented metrics.
+**Pass criteria:** Every concrete claim (specific names, dates, numbers, features) in the output is present in the input. Soul added through tone and structure, not fabrication.
+
+### 5.0.1
+- Add Soul step 4 (Add specifics) tightened: do not invent specifics the source lacks; use opinion / rhythm / contradiction instead.
+- Eval 5 added: fact preservation in rewrite. Every concrete claim in the output must trace to the input.
+
 ### 5.0.0
-- **Model-aware detection** (major). Added 4 new Tier 1 (P25-P28) and 2 new Tier 2 (P29-P30) patterns.
-- Revised P13 (em dash), P17 (emoji), and P18 (curly quotes) with model-specific signal weighting.
-- Added "Model Era Note" table at top of PATTERNS.md; per-pattern model caveats condensed to one source of truth.
-- Eval 4 added: refuse attribution when only one weak signal (e.g. em dash alone) is present.
 
 ### 4.1.0
 - Reduced from 694 to under 500 lines using progressive disclosure
