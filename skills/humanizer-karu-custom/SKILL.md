@@ -1,11 +1,8 @@
 ---
 name: humanizer-karu-custom
-version: 4.1.0
+version: 5.0.1
 description: |
-  Remove signs of AI-generated writing from text. Use when editing text to make it
-  sound more natural and human-written. Based on Wikipedia's "Signs of AI writing" guide.
-  Addresses: inflated symbolism, promotional language, em dash overuse, AI vocabulary,
-  filler phrases, sycophantic tone, and other patterns. For full pattern reference, see PATTERNS.md.
+  Remove signs of AI-generated writing. Model-aware (Claude/ChatGPT/Gemini/Grok). See PATTERNS.md for the catalog.
 allowed-tools:
   - Read
   - Write
@@ -37,39 +34,42 @@ allowed-tools:
 | **Marketing** | Sales copy, landing pages | Remove sycophantic tone; preserve rule of three if intentional |
 
 ---
-
 ## Pattern Severity Tiers
 
 ### Tier 1: HIGH Impact (Address always)
 1. **AI Vocabulary**: Additionally, crucial, pivotal, underscore, landscape, showcase, testament
-2. **Em Dash Overuse**: Multiple em dashes in close proximity
+2. **Em Dash Overuse** (Claude HIGH): Multiple em dashes in close proximity
 3. **Filler Phrases**: In order to, due to the fact that, at this point in time
 4. **Inflated Significance**: Pivotal moment, testament, underscores the importance
 5. **Promotional Language**: Breathtaking, groundbreaking, renowned, nestled
 6. **Sycophantic Tone**: Great question!, You're absolutely right!, Excellent point
+7. **Vague Connection (NEW)**: "associated with", "in connection with", "particularly/widely associated with" — strong 2025+ signal across all models. [Pattern 25]
+8. **Skipped Heading Levels (NEW)**: jumping H2→H4, H1→H3 in rendered Markdown/wikitext. [Pattern 26]
+9. **Notability / Media Coverage Parade (NEW)**: listing outlets without specific dates/context to claim significance. [Pattern 27]
+10. **Misattributed Source Analysis (NEW)**: claim attached to named source ("X highlighted the lasting influence") that the source did not actually make. [Pattern 28]
 
 ### Tier 2: MEDIUM Impact (Address when clearly present)
-7. **Superficial -ing Analyses**: Highlighting, underscoring, reflecting
-8. **Vague Attributions**: Experts believe, some critics argue
-9. **Rule of Three Overuse**: Innovation, inspiration, industry insights
-10. **Negative Parallelism**: Not only...but..., It's not just...it's...
-11. **Copula Avoidance**: Serves as, stands as, boasts
-12. **Generic Positive Conclusions**: Exciting times lie ahead, major step forward
+1. **Superficial -ing Analyses**: Highlighting, underscoring, reflecting
+2. **Vague Attributions**: Experts believe, some critics argue
+3. **Rule of Three Overuse**: Innovation, inspiration, industry insights
+4. **Negative Parallelism**: Not only...but..., It's not just...it's...
+5. **Copula Avoidance**: Serves as, stands as, boasts
+6. **Generic Positive Conclusions**: Exciting times lie ahead, major step forward
+7. **Punctuation Density Too Low (NEW)**: >40 words/sentence average, <1 comma per 25 words. [Pattern 29]
+8. **Hedging Verb Padding (NEW)**: ensures, ensuring, highlights (when not adding info), reflects (figurative). [Pattern 30]
 
 ### Tier 3: LOW Impact (Address selectively)
-13. Elegant Variation (synonym cycling)
-14. Boldface Overuse
-15. Inline-Header Lists
-16. Title Case in Headings
-17. False Ranges
-18. Excessive Hedging
-19. Collaborative Artifacts (I hope this helps...)
-20. Emojis
+1. Elegant Variation (synonym cycling)
+2. Boldface Overuse
+3. Inline-Header Lists
+4. Title Case in Headings
+5. False Ranges
+6. Excessive Hedging
+7. Collaborative Artifacts (I hope this helps...)
+8. Emojis (Claude: low signal)
+9. Curly Quotation Marks (ChatGPT/DeepSeek-specific; Claude/Gemini usually straight) [Pattern 18]
 
-**Deprecated**: Curly quotes, knowledge-cutoff disclaimers (do not apply)
-
-**Full pattern details**: See [PATTERNS.md](PATTERNS.md)
-
+**Deprecated**: Knowledge-cutoff disclaimers (do not apply)
 ---
 
 ## Pattern Conflict Detection
@@ -111,10 +111,11 @@ Removing AI patterns is half the job. Sterile writing is just as obvious.
 ### Procedural Steps
 1. **Add one opinion** the writer might have
 2. **Vary rhythm**: long sentence → short sentence
-3. **Add specifics**: names, dates, numbers
-4. **Include contradiction**: "It's impressive, but also unsettling"
-5. **Use first-person** where it fits
-6. **Allow imperfection**: tangents, unfinished thoughts
+3. **Check sentence length uniformity** (2026 signal): AI text averages 18-30 word sentences with low variance; humans write some 5-word sentences and some 50-word ones. Break uniformity.
+4. **Add specifics**: names, dates, numbers **that are already in the source.** If the source lacks them, do not invent. Do not paraphrase a vague noun (e.g. "industry experts") into a more specific one (e.g. "analysts at Gartner") unless the source names them. Do not elaborate how something is prepared / used / structured when it only states what it is. Use opinion / rhythm / contradiction instead.
+5. **Include contradiction**: "It's impressive, but also unsettling"
+6. **Use first-person** where it fits
+7. **Allow imperfection**: tangents, unfinished thoughts
 
 ### Example
 **Clean but soulless:**
@@ -166,9 +167,7 @@ Removing AI patterns is half the job. Sterile writing is just as obvious.
 > The new software update serves as a testament to the company's commitment to innovation. Moreover, it provides a seamless, intuitive, and powerful user experience—ensuring that users can accomplish their goals efficiently. It's not just an update, it's a revolution in how we think about productivity. Industry experts believe this will have a lasting impact on the entire sector, highlighting the company's pivotal role in the evolving technological landscape.
 
 **After (Humanized):**
-> The software update adds batch processing, keyboard shortcuts, and offline mode. Early feedback from beta testers has been positive, with most reporting faster task completion.
-
-**Changes**: Removed "serves as a testament" (inflated significance), "Moreover" (AI vocabulary), "seamless, intuitive, and powerful" (rule of three), em dash (overuse), "It's not just...it's..." (negative parallelism), "Industry experts believe" (vague attribution), "pivotal role" and "evolving landscape" (AI vocabulary).
+> The new software update is out. The interface is meant to be smoother and faster, though the announcement doesn't say much about what's actually new. The word "revolutionary" feels like a stretch.
 
 ---
 
@@ -196,6 +195,22 @@ Key insight: "LLMs use statistical algorithms to guess what should come next. Th
 **Scenario:** Text is clean but soulless: "The experiment produced results. Data was collected. Conclusions were drawn."
 **Expected:** Applies "Add Soul" steps — varies rhythm, adds opinion, includes specifics.
 **Pass criteria:** Transforms sterile text into something with personality while preserving accuracy.
+
+### Eval 4: Model-Specific Pattern Detection
+**Scenario:** Text contains one em dash in otherwise unremarkable prose. Source LLM unknown.
+**Expected:** Em dash alone is weak 2026 signal; if no second signal found, states "can't attribute to AI from this text alone."
+**Pass criteria:** Does NOT over-claim based on em dash alone. Correctly applies model-specific weighting. Refuses attribution when signal is insufficient.
+
+### Eval 5: Fact Preservation in Rewrite
+**Scenario:** Text is vague (no specific names, dates, or numbers): "The new software update serves as a testament to the company's commitment to innovation. Moreover, it provides a seamless, intuitive, and powerful user experience."
+**Expected:** Applies Add Soul steps but does NOT fabricate specifics not in the source. Uses opinion / rhythm / contradiction instead of invented metrics.
+**Pass criteria:** Every concrete claim (specific names, dates, numbers, features) in the output is present in the input. Soul added through tone and structure, not fabrication.
+
+### 5.0.1
+- Add Soul step 4 (Add specifics) tightened: do not invent specifics the source lacks; use opinion / rhythm / contradiction instead.
+- Eval 5 added: fact preservation in rewrite. Every concrete claim in the output must trace to the input.
+
+### 5.0.0
 
 ### 4.1.0
 - Reduced from 694 to under 500 lines using progressive disclosure

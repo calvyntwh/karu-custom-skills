@@ -42,15 +42,16 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ---
 
-### Pattern 13: Em Dash Overuse [TIER 1]
+### Pattern 13: Em Dash Usage (Model-Dependent) [TIER 1]
 
-**Problem:** LLMs use em dashes (—) more than humans, mimicking "punchy" sales writing.
+**Problem:** LLMs use em dashes more than professional human writers, often with surrounding spaces (contrary to typographic guidelines) and in formulaic "punched up" sales contexts.
 
 **Before:**
 > The term is primarily promoted by Dutch institutions—not by the people themselves. You don't say "Netherlands, Europe" as an address—yet this mislabeling continues—even in official documents.
 
 **After:**
 > The term is primarily promoted by Dutch institutions, not by the people themselves. You don't say "Netherlands, Europe" as an address, yet this mislabeling continues in official documents.
+
 
 ---
 
@@ -75,6 +76,69 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 - "In the event that you need help" → "If you need help"
 - "The system has the ability to process" → "The system can process"
 - "It is important to note that the data shows" → "The data shows"
+
+---
+
+## Model Era Note (2026)
+
+Patterns P25, P27, P28 are uniform across models (HIGH signal in all). Only these vary:
+
+| Pattern family | Claude | ChatGPT (5.1+) | Gemini | Grok |
+|---|---|---|---|---|
+| Em dash overuse (P13) | **HIGH** | low (suppressed) | mixed | medium |
+| Curly quotes (P18) | low (rare) | **HIGH** | low | medium |
+
+---
+
+### Pattern 25: Vague Connection / Association [TIER 1]
+
+**Problem:** LLMs avoid simple `of`/`for`/`by` constructions and reach for indirect phrases (`associated with`, `in connection with`, `particularly/widely associated with`) when describing relationships. Common in newer (2025+) LLMs with retrieval-augmented generation.
+
+**Before:**
+> The system has been associated with residential water management applications including swimming-pool backwash and sump-pump discharge.
+
+**After:**
+> The system handles residential water from sources including swimming-pool backwash and sump-pump discharge.
+
+---
+
+### Pattern 26: Skipped Heading Levels [TIER 1]
+
+**Problem:** LLMs translate Markdown to wikitext by jumping from level 2 (`==`) to level 4 (`====`), skipping level 3. Rare for manually formatted pages; common in AI output.
+
+**Before:**
+> ## Section
+> #### Subsection
+
+**After:**
+> ## Section
+> ### Subsection
+
+---
+
+### Pattern 27: Canned Notability / Media Coverage Parade [TIER 1]
+
+**Problem:** LLMs prove a subject is notable by listing outlets it appeared in. More common in text from AI tools released in 2025 or later.
+
+**Words:** featured in [Outlet A], [Outlet B], and other prominent media outlets, covered by multiple high-quality, independent sources, maintains an active social media presence
+
+**Before:**
+> She spoke about AI on CNN, and was featured in Vogue, Wired, Toronto Star, and other media outlets.
+
+**After:**
+> She discussed AI on CNN in March 2024, and was profiled in Vogue's November 2023 issue.
+
+---
+
+### Pattern 28: Misattributed Source Analysis [TIER 1]
+
+**Problem:** LLMs with retrieval-augmented generation attach claims to named sources ("Roger Ebert highlighted the lasting influence") regardless of whether those sources actually said anything close. Differs from Pattern 5 (vague attribution) because the source IS named but misrepresented.
+
+**Before:**
+> Fridrichová highlights that Blois and Bar perceive truncations as a **distortion of the language rather than an enrichment**, a perspective that still fuels linguistic debates today.
+
+**After:**
+> Fridrichová reads Blois and Bar as critical of truncations, not endorsing them.
 
 ---
 
@@ -160,6 +224,34 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ---
 
+### Pattern 29: Punctuation Density Too Low [TIER 2]
+
+**Problem:** AI text averages fewer commas, semicolons, and parentheses per word than human text. Sentences average longer, paragraph punctuation density is lower.
+
+**Detection rule:** <1 comma per 25 words = suspect.
+
+**Before:**
+> The new policy applies to all employees and contractors and includes provisions for remote work and flexible scheduling and was introduced after extensive consultation with the management board and the union representatives.
+
+**After:**
+> The new policy applies to all employees and contractors. It includes provisions for remote work and flexible scheduling, and was introduced after consulting the management board and union representatives.
+
+---
+
+### Pattern 30: Hedging Verb Padding [TIER 2]
+
+**Problem:** LLMs pad ideas with verbs that add no information. Distinct from Pattern 3 (-ing analyses) by grammatical form.
+
+**Words:** ensures, ensuring, highlights (when not adding info), supports, reflects (figurative), facilitates, fosters (figurative)
+
+**Before:**
+> The new dashboard ensures that managers can track team performance, highlighting key metrics and ensuring alignment with company goals.
+
+**After:**
+> The dashboard shows team performance against the company's stated goals.
+
+---
+
 ## Tier 3: LOW Impact Patterns
 
 ### Pattern 11: Elegant Variation (Synonym Cycling) [TIER 3]
@@ -214,7 +306,9 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ---
 
-### Pattern 17: Emojis [TIER 3]
+### Pattern 17: Emojis [TIER 3, MODEL-DEPENDENT]
+
+**Problem:** AI chatbots decorate section headings or bullet points with emoji. Almost always in talk page comments and edit summaries; rarer in 2026 main-article text but still seen.
 
 **Before:**
 > 🚀 **Launch Phase:** The product launches in Q3
@@ -223,6 +317,7 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 **After:**
 > The product launches in Q3. User research showed a preference for simplicity. Next step: schedule a follow-up meeting.
+
 
 ---
 
@@ -250,13 +345,21 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ## Deprecated Patterns (Do Not Apply)
 
-### Pattern 18: Curly Quotation Marks [DEPRECATED]
-Formatting issue, not writing style. Use straight quotes.
-
 ### Pattern 20: Knowledge-Cutoff Disclaimers [DEPRECATED]
 "as of [date]", "Up to my last training update", etc. Obsolete—AI models now have current training data.
 
 ---
+
+### Pattern 18: Curly Quotation Marks [TIER 3, MODEL-SPECIFIC]
+
+**Note:** formerly deprecated as a "formatting issue." Re-promoted in 2026 because the pattern is now strongly model-specific. **False positives:** macOS/iOS smart quotes auto-convert straight → curly.
+
+**Before:**
+> “The new policy” — said the manager, ‘effective immediately’.
+
+**After:**
+> "The new policy," said the manager, "effective immediately."
+
 
 ## Add Soul: Injecting Human Voice
 
