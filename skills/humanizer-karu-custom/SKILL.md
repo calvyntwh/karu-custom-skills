@@ -217,7 +217,7 @@ Key insight: "LLMs use statistical algorithms to guess what should come next. Th
 - Added "Model Era Note" at top of PATTERNS.md with per-model signal weighting table.
 - Added Eval 4: model-specific detection (refuse attribution when signal insufficient).
 - Added sentence-length uniformity check to Add Soul procedural steps.
-- Pattern reference renumbered to 1-30 (was 1-24).
+- Pattern reference renumbered; v4.1.0 had 24 patterns with a gap at #2 (inherited from Wikipedia source numbering), v5.0 adds P25-P30 bringing total to 29. The #2 gap is intentional and unchanged.
 
 ### 4.1.0
 - Reduced from 694 to under 500 lines using progressive disclosure
