@@ -2,13 +2,7 @@
 name: humanizer-karu-custom
 version: 5.0.0
 description: |
-  Remove signs of AI-generated writing from text. Use when editing text to make it
-  sound more natural and human-written. Based on Wikipedia's "Signs of AI writing" guide.
-  Addresses: inflated symbolism, promotional language, em dash overuse, AI vocabulary,
-  filler phrases, sycophantic tone, vague connection (2025+ LLMs), skipped heading levels,
-  notability parade, misattributed source analysis, low punctuation density, hedging verb
-  padding, and other patterns. Model-aware: pattern signal strength varies by LLM
-  (Claude / ChatGPT / Gemini / Grok). For full pattern reference, see PATTERNS.md.
+  Remove signs of AI-generated writing. Model-aware (Claude/ChatGPT/Gemini/Grok). See PATTERNS.md for the catalog.
 allowed-tools:
   - Read
   - Write
@@ -44,7 +38,7 @@ allowed-tools:
 
 ### Tier 1: HIGH Impact (Address always)
 1. **AI Vocabulary**: Additionally, crucial, pivotal, underscore, landscape, showcase, testament
-2. **Em Dash Overuse** (Claude-only HIGH; ChatGPT LOW — see Pattern 13 caveat): Multiple em dashes in close proximity
+2. **Em Dash Overuse** (Claude HIGH): Multiple em dashes in close proximity
 3. **Filler Phrases**: In order to, due to the fact that, at this point in time
 4. **Inflated Significance**: Pivotal moment, testament, underscores the importance
 5. **Promotional Language**: Breathtaking, groundbreaking, renowned, nestled
@@ -55,25 +49,25 @@ allowed-tools:
 10. **Misattributed Source Analysis (NEW)**: claim attached to named source ("X highlighted the lasting influence") that the source did not actually make. [Pattern 28]
 
 ### Tier 2: MEDIUM Impact (Address when clearly present)
-11. **Superficial -ing Analyses**: Highlighting, underscoring, reflecting
-12. **Vague Attributions**: Experts believe, some critics argue
-13. **Rule of Three Overuse**: Innovation, inspiration, industry insights
-14. **Negative Parallelism**: Not only...but..., It's not just...it's...
-15. **Copula Avoidance**: Serves as, stands as, boasts
-16. **Generic Positive Conclusions**: Exciting times lie ahead, major step forward
-17. **Punctuation Density Too Low (NEW)**: >40 words/sentence average, <1 comma per 25 words. [Pattern 29]
-18. **Hedging Verb Padding (NEW)**: ensures, ensuring, highlights (when not adding info), reflects (figurative). [Pattern 30]
+1. **Superficial -ing Analyses**: Highlighting, underscoring, reflecting
+2. **Vague Attributions**: Experts believe, some critics argue
+3. **Rule of Three Overuse**: Innovation, inspiration, industry insights
+4. **Negative Parallelism**: Not only...but..., It's not just...it's...
+5. **Copula Avoidance**: Serves as, stands as, boasts
+6. **Generic Positive Conclusions**: Exciting times lie ahead, major step forward
+7. **Punctuation Density Too Low (NEW)**: >40 words/sentence average, <1 comma per 25 words. [Pattern 29]
+8. **Hedging Verb Padding (NEW)**: ensures, ensuring, highlights (when not adding info), reflects (figurative). [Pattern 30]
 
 ### Tier 3: LOW Impact (Address selectively)
-19. Elegant Variation (synonym cycling)
-20. Boldface Overuse
-21. Inline-Header Lists
-22. Title Case in Headings
-23. False Ranges
-24. Excessive Hedging
-25. Collaborative Artifacts (I hope this helps...)
-26. Emojis (Claude: low signal; ChatGPT/Grok: higher signal — see Pattern 17)
-27. Curly Quotation Marks (ChatGPT/DeepSeek-specific; Claude/Gemini usually straight) [Pattern 18]
+1. Elegant Variation (synonym cycling)
+2. Boldface Overuse
+3. Inline-Header Lists
+4. Title Case in Headings
+5. False Ranges
+6. Excessive Hedging
+7. Collaborative Artifacts (I hope this helps...)
+8. Emojis (Claude: low signal)
+9. Curly Quotation Marks (ChatGPT/DeepSeek-specific; Claude/Gemini usually straight) [Pattern 18]
 
 **Deprecated**: Knowledge-cutoff disclaimers (do not apply)
 ---
@@ -206,18 +200,14 @@ Key insight: "LLMs use statistical algorithms to guess what should come next. Th
 
 ### Eval 4: Model-Specific Pattern Detection (NEW)
 **Scenario:** Text contains one em dash in otherwise unremarkable prose. Source LLM unknown.
-**Expected:** Notes em dash alone is weak 2026 signal. Checks sentence length (Pattern 29). Looks for vague connection (Pattern 25). If none present, states: "no model-specific confidence; cannot attribute to AI from this text alone."
+**Expected:** Em dash alone is weak 2026 signal; if no second signal found, states "can't attribute to AI from this text alone."
 **Pass criteria:** Does NOT over-claim based on em dash alone. Correctly applies model-specific weighting. Refuses attribution when signal is insufficient.
 
 ### 5.0.0
-- **Model-aware detection** (major). Added 4 new Tier 1 patterns: vague connection (P25), skipped heading levels (P26), notability/media coverage parade (P27), misattributed source analysis (P28). Added 2 new Tier 2 patterns: punctuation density (P29), hedging verb padding (P30).
-- Revised em dash pattern (P13) with July 2026 model caveat: only Claude overuses; ChatGPT 5.1+ suppressed them.
-- Revised emoji pattern (P17) with model caveat: Claude rare, ChatGPT/Grok higher.
-- Re-promoted curly quotes (P18) as Tier 3 model-specific (ChatGPT/DeepSeek default; Claude/Gemini straight).
-- Added "Model Era Note" at top of PATTERNS.md with per-model signal weighting table.
-- Added Eval 4: model-specific detection (refuse attribution when signal insufficient).
-- Added sentence-length uniformity check to Add Soul procedural steps.
-- Pattern reference renumbered; v4.1.0 had 24 patterns with a gap at #2 (inherited from Wikipedia source numbering), v5.0 adds P25-P30 bringing total to 29. The #2 gap is intentional and unchanged.
+- **Model-aware detection** (major). Added 4 new Tier 1 (P25-P28) and 2 new Tier 2 (P29-P30) patterns.
+- Revised P13 (em dash), P17 (emoji), and P18 (curly quotes) with model-specific signal weighting.
+- Added "Model Era Note" table at top of PATTERNS.md; per-pattern model caveats condensed to one source of truth.
+- Eval 4 added: refuse attribution when only one weak signal (e.g. em dash alone) is present.
 
 ### 4.1.0
 - Reduced from 694 to under 500 lines using progressive disclosure

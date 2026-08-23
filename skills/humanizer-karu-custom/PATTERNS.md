@@ -46,12 +46,6 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 **Problem:** LLMs use em dashes more than professional human writers, often with surrounding spaces (contrary to typographic guidelines) and in formulaic "punched up" sales contexts.
 
-**Model caveat (July 2026):** Only Claude uses em dashes more than professional writers. ChatGPT 5.1+ was explicitly tuned to suppress them. Gemini and Grok are mixed.
-
-- **Claude output:** HIGH signal. Apply as Tier 1.
-- **ChatGPT output:** LOW signal. Demote to Pattern 29 (punctuation density) check instead.
-- **Gemini/Grok output:** MEDIUM signal. Combine with Pattern 25 (vague connection) or 27 (notability parade) before declaring.
-
 **Before:**
 > The term is primarily promoted by Dutch institutions—not by the people themselves. You don't say "Netherlands, Europe" as an address—yet this mislabeling continues—even in official documents.
 
@@ -87,25 +81,18 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ## Model Era Note (2026)
 
-Pattern signal strength varies by LLM. Apply this weight when ambiguous:
+Patterns P25, P27, P28 are uniform across models (HIGH signal in all). Only these vary:
 
 | Pattern family | Claude | ChatGPT (5.1+) | Gemini | Grok |
 |---|---|---|---|---|
 | Em dash overuse (P13) | **HIGH** | low (suppressed) | mixed | medium |
-| Vague connection (P25) | **HIGH** | **HIGH** | high | high |
-| Notability parade (P27) | high | **HIGH** | high | medium |
-| Misattribution (P28) | high | **HIGH** | high | **HIGH** |
 | Curly quotes (P18) | low (rare) | **HIGH** | low | medium |
-
-Single-signal attribution is unreliable in 2026. Require ≥2 patterns before declaring "likely AI."
 
 ---
 
 ### Pattern 25: Vague Connection / Association [TIER 1]
 
 **Problem:** LLMs avoid simple `of`/`for`/`by` constructions and reach for indirect phrases (`associated with`, `in connection with`, `particularly/widely associated with`) when describing relationships. Common in newer (2025+) LLMs with retrieval-augmented generation.
-
-**Words:** associated with, in connection with, particularly/widely associated with, in relation to, with respect to
 
 **Before:**
 > The system has been associated with residential water management applications including swimming-pool backwash and sump-pump discharge.
@@ -126,8 +113,6 @@ Single-signal attribution is unreliable in 2026. Require ≥2 patterns before de
 **After:**
 > ## Section
 > ### Subsection
-
-**Detection rule:** any document that jumps heading levels (e.g., H1 → H3, H2 → H4) is suspect.
 
 ---
 
@@ -243,10 +228,7 @@ Single-signal attribution is unreliable in 2026. Require ≥2 patterns before de
 
 **Problem:** AI text averages fewer commas, semicolons, and parentheses per word than human text. Sentences average longer, paragraph punctuation density is lower.
 
-**Detection rule (not a word list):**
-- Average sentence length >40 words = suspect
-- <1 comma per 25 words = suspect
-- 0 semicolons or parentheses in a 200-word passage = suspect
+**Detection rule:** <1 comma per 25 words = suspect.
 
 **Before:**
 > The new policy applies to all employees and contractors and includes provisions for remote work and flexible scheduling and was introduced after extensive consultation with the management board and the union representatives.
@@ -328,12 +310,6 @@ Single-signal attribution is unreliable in 2026. Require ≥2 patterns before de
 
 **Problem:** AI chatbots decorate section headings or bullet points with emoji. Almost always in talk page comments and edit summaries; rarer in 2026 main-article text but still seen.
 
-**Model caveat:**
-- **Claude:** rarely produces emoji in text. Don't use Pattern 17 as a Claude detector.
-- **ChatGPT:** emoji as headings/bullets is a moderate signal, especially in conversational rewrites.
-- **Grok:** distinctive; emoji-as-heading is a Grok tell.
-- **DeepSeek:** emoji in headings common.
-
 **Before:**
 > 🚀 **Launch Phase:** The product launches in Q3
 > 💡 **Key Insight:** Users prefer simplicity
@@ -376,13 +352,7 @@ Single-signal attribution is unreliable in 2026. Require ≥2 patterns before de
 
 ### Pattern 18: Curly Quotation Marks [TIER 3, MODEL-SPECIFIC]
 
-**Note:** formerly deprecated as a "formatting issue." Re-promoted in 2026 because the pattern is now strongly model-specific.
-
-**Model caveat:**
-- **ChatGPT:** uses curly quotes by default. Strong ChatGPT detector when paired with other ChatGPT tells.
-- **DeepSeek:** curly quotes common.
-- **Claude/Gemini:** typically use straight quotes. Curly quotes here = unusual, may indicate copy-paste from a different model's output or a non-AI source.
-- **macOS/iOS system default:** smart quotes may convert straight → curly automatically, so false positives common on Apple devices.
+**Note:** formerly deprecated as a "formatting issue." Re-promoted in 2026 because the pattern is now strongly model-specific. **False positives:** macOS/iOS smart quotes auto-convert straight → curly.
 
 **Before:**
 > “The new policy” — said the manager, ‘effective immediately’.
