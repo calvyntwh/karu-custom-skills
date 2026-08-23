@@ -42,15 +42,22 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ---
 
-### Pattern 13: Em Dash Overuse [TIER 1]
+### Pattern 13: Em Dash Usage (Model-Dependent) [TIER 1]
 
-**Problem:** LLMs use em dashes (—) more than humans, mimicking "punchy" sales writing.
+**Problem:** LLMs use em dashes more than professional human writers, often with surrounding spaces (contrary to typographic guidelines) and in formulaic "punched up" sales contexts.
+
+**Model caveat (July 2026):** Only Claude uses em dashes more than professional writers. ChatGPT 5.1+ was explicitly tuned to suppress them. Gemini and Grok are mixed.
+
+- **Claude output:** HIGH signal. Apply as Tier 1.
+- **ChatGPT output:** LOW signal. Demote to Pattern 29 (punctuation density) check instead.
+- **Gemini/Grok output:** MEDIUM signal. Combine with Pattern 25 (vague connection) or 27 (notability parade) before declaring.
 
 **Before:**
 > The term is primarily promoted by Dutch institutions—not by the people themselves. You don't say "Netherlands, Europe" as an address—yet this mislabeling continues—even in official documents.
 
 **After:**
 > The term is primarily promoted by Dutch institutions, not by the people themselves. You don't say "Netherlands, Europe" as an address, yet this mislabeling continues in official documents.
+
 
 ---
 
@@ -75,6 +82,78 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 - "In the event that you need help" → "If you need help"
 - "The system has the ability to process" → "The system can process"
 - "It is important to note that the data shows" → "The data shows"
+
+---
+
+## Model Era Note (2026)
+
+Pattern signal strength varies by LLM. Apply this weight when ambiguous:
+
+| Pattern family | Claude | ChatGPT (5.1+) | Gemini | Grok |
+|---|---|---|---|---|
+| Em dash overuse (P13) | **HIGH** | low (suppressed) | mixed | medium |
+| Vague connection (P25) | **HIGH** | **HIGH** | high | high |
+| Notability parade (P27) | high | **HIGH** | high | medium |
+| Misattribution (P28) | high | **HIGH** | high | **HIGH** |
+| Curly quotes (P18) | low (rare) | **HIGH** | low | medium |
+
+Single-signal attribution is unreliable in 2026. Require ≥2 patterns before declaring "likely AI."
+
+---
+
+### Pattern 25: Vague Connection / Association [TIER 1]
+
+**Problem:** LLMs avoid simple `of`/`for`/`by` constructions and reach for indirect phrases (`associated with`, `in connection with`, `particularly/widely associated with`) when describing relationships. Common in newer (2025+) LLMs with retrieval-augmented generation.
+
+**Words:** associated with, in connection with, particularly/widely associated with, in relation to, with respect to
+
+**Before:**
+> The system has been associated with residential water management applications including swimming-pool backwash and sump-pump discharge.
+
+**After:**
+> The system handles residential water from sources including swimming-pool backwash and sump-pump discharge.
+
+---
+
+### Pattern 26: Skipped Heading Levels [TIER 1]
+
+**Problem:** LLMs translate Markdown to wikitext by jumping from level 2 (`==`) to level 4 (`====`), skipping level 3. Rare for manually formatted pages; common in AI output.
+
+**Before:**
+> ## Section
+> #### Subsection
+
+**After:**
+> ## Section
+> ### Subsection
+
+**Detection rule:** any document that jumps heading levels (e.g., H1 → H3, H2 → H4) is suspect.
+
+---
+
+### Pattern 27: Canned Notability / Media Coverage Parade [TIER 1]
+
+**Problem:** LLMs prove a subject is notable by listing outlets it appeared in. More common in text from AI tools released in 2025 or later.
+
+**Words:** featured in [Outlet A], [Outlet B], and other prominent media outlets, covered by multiple high-quality, independent sources, maintains an active social media presence
+
+**Before:**
+> She spoke about AI on CNN, and was featured in Vogue, Wired, Toronto Star, and other media outlets.
+
+**After:**
+> She discussed AI on CNN in March 2024, and was profiled in Vogue's November 2023 issue.
+
+---
+
+### Pattern 28: Misattributed Source Analysis [TIER 1]
+
+**Problem:** LLMs with retrieval-augmented generation attach claims to named sources ("Roger Ebert highlighted the lasting influence") regardless of whether those sources actually said anything close. Differs from Pattern 5 (vague attribution) because the source IS named but misrepresented.
+
+**Before:**
+> Fridrichová highlights that Blois and Bar perceive truncations as a **distortion of the language rather than an enrichment**, a perspective that still fuels linguistic debates today.
+
+**After:**
+> Fridrichová reads Blois and Bar as critical of truncations, not endorsing them.
 
 ---
 
@@ -160,6 +239,37 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ---
 
+### Pattern 29: Punctuation Density Too Low [TIER 2]
+
+**Problem:** AI text averages fewer commas, semicolons, and parentheses per word than human text. Sentences average longer, paragraph punctuation density is lower.
+
+**Detection rule (not a word list):**
+- Average sentence length >40 words = suspect
+- <1 comma per 25 words = suspect
+- 0 semicolons or parentheses in a 200-word passage = suspect
+
+**Before:**
+> The new policy applies to all employees and contractors and includes provisions for remote work and flexible scheduling and was introduced after extensive consultation with the management board and the union representatives.
+
+**After:**
+> The new policy applies to all employees and contractors. It includes provisions for remote work and flexible scheduling, and was introduced after consulting the management board and union representatives.
+
+---
+
+### Pattern 30: Hedging Verb Padding [TIER 2]
+
+**Problem:** LLMs pad ideas with verbs that add no information. Distinct from Pattern 3 (-ing analyses) by grammatical form.
+
+**Words:** ensures, ensuring, highlights (when not adding info), supports, reflects (figurative), facilitates, fosters (figurative)
+
+**Before:**
+> The new dashboard ensures that managers can track team performance, highlighting key metrics and ensuring alignment with company goals.
+
+**After:**
+> The dashboard shows team performance against the company's stated goals.
+
+---
+
 ## Tier 3: LOW Impact Patterns
 
 ### Pattern 11: Elegant Variation (Synonym Cycling) [TIER 3]
@@ -214,7 +324,15 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ---
 
-### Pattern 17: Emojis [TIER 3]
+### Pattern 17: Emojis [TIER 3, MODEL-DEPENDENT]
+
+**Problem:** AI chatbots decorate section headings or bullet points with emoji. Almost always in talk page comments and edit summaries; rarer in 2026 main-article text but still seen.
+
+**Model caveat:**
+- **Claude:** rarely produces emoji in text. Don't use Pattern 17 as a Claude detector.
+- **ChatGPT:** emoji as headings/bullets is a moderate signal, especially in conversational rewrites.
+- **Grok:** distinctive; emoji-as-heading is a Grok tell.
+- **DeepSeek:** emoji in headings common.
 
 **Before:**
 > 🚀 **Launch Phase:** The product launches in Q3
@@ -223,6 +341,7 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 **After:**
 > The product launches in Q3. User research showed a preference for simplicity. Next step: schedule a follow-up meeting.
+
 
 ---
 
@@ -250,13 +369,27 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ## Deprecated Patterns (Do Not Apply)
 
-### Pattern 18: Curly Quotation Marks [DEPRECATED]
-Formatting issue, not writing style. Use straight quotes.
-
 ### Pattern 20: Knowledge-Cutoff Disclaimers [DEPRECATED]
 "as of [date]", "Up to my last training update", etc. Obsolete—AI models now have current training data.
 
 ---
+
+### Pattern 18: Curly Quotation Marks [TIER 3, MODEL-SPECIFIC]
+
+**Note:** formerly deprecated as a "formatting issue." Re-promoted in 2026 because the pattern is now strongly model-specific.
+
+**Model caveat:**
+- **ChatGPT:** uses curly quotes by default. Strong ChatGPT detector when paired with other ChatGPT tells.
+- **DeepSeek:** curly quotes common.
+- **Claude/Gemini:** typically use straight quotes. Curly quotes here = unusual, may indicate copy-paste from a different model's output or a non-AI source.
+- **macOS/iOS system default:** smart quotes may convert straight → curly automatically, so false positives common on Apple devices.
+
+**Before:**
+> “The new policy” — said the manager, ‘effective immediately’.
+
+**After:**
+> "The new policy," said the manager, "effective immediately."
+
 
 ## Add Soul: Injecting Human Voice
 
