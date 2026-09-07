@@ -87,12 +87,17 @@ List concrete, specific pathways to failure. **Only consult `references/failure_
 *   "I will unplug the database cable mid-transaction."
 
 #### Validation Step
-For each failure pathway, verify it is actually exploitable in your architecture:
-*   Is the attack surface exposed? (network, API, UI?)
-*   Does the vulnerability actually exist in your implementation?
-*   Can you demonstrate exploitability (even theoretically)?
+Verify each failure pathway is actually exploitable in your architecture. **Use the OWASP verification procedure** (OWASP WSTG, Penetration Testing Methodologies):
+1. **Reproduce** — can you reach the vulnerable code path from a realistic entry point? Confirm the attack surface is exposed (network, API, UI) and the trust boundary is in fact crossable.
+2. **Confirm impact** — does the demonstrated flaw produce the Anti-Goal outcome (data access, privilege escalation, code execution)? OWASP recommends chaining weaknesses to actual damage, not stopping at "scanner finds CVSS 7.5."
+3. **Document evidence** — record reproducible steps, affected components, and the ATT&CK technique ID (if applicable). Per OWASP, evidence-backed findings are required for any Tier 1/2 safeguard.
+
+
+
 
 Log unvalidated failures separately. If you cannot verify exploitability, treat as lower confidence.
+
+**Source:** OWASP Web Security Testing Guide, "Penetration Testing Methodologies" (PTES-aligned); 12-practice webapp pentest framework (threat-model → exploit-validate → evidence-rich remediation).
 
 ### 4. Inversion (The Fix)
 Design specific safeguards to block those pathways.

@@ -58,7 +58,15 @@ Active verify the Territory.
 ### Pre-Flight Checklist (Before Probing)
 - [ ] **Is running code safe in this context?** (No production side effects)
 - [ ] **Is this a one-off or recurring issue?** (Recurring suggests systemic problem)
-- [ ] **Rate Map credibility (1-5):** Low credibility = probe first
+- [ ] **Rate Map credibility (1-3, Korzybski-sourced):** The map is the model; the territory is the running system. Anchor by recency of verification:
+
+| Credibility | Anchor | Source |
+|-------------|--------|--------|
+| 1 | Contradicted by last run / explicitly tested wrong | Korzybski: map is wrong if structure doesn't match territory |
+| 2 | Documented but unverified in this session | Korzybski: structural similarity claim requires verification |
+| 3 | Recently verified against the running system this session | Korzybski: useful if "correct, has similar structure to territory" |
+
+**Low credibility (1) = probe first. High credibility (3) = trust the doc until contradicted. Anchors force the rating to drive a concrete decision rather than a default 3.**
 
 ### Territory Types & Verification Tactics
 

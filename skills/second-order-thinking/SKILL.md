@@ -33,10 +33,14 @@ The ability to think beyond immediate consequences to cascading effects across t
 ## The Protocol: Cascading Consequence Analysis
 
 ### Simplified Mode (Quick Decisions)
+**Use when the decision is reversible and low-stakes** (Bezos Type 2 / Farnam Street "two-way door": you can walk back through the decision cheaply). Source: Farnam Street, "Reversible and Irreversible Decisions."
 1. What happens first?
 2. And then what?
 3. And then what?
 Stop when effects become speculative or plateau.
+
+**Escalate to Full Protocol if any of these apply:** (a) the decision is irreversible or hard to reverse (Bezos Type 1 / one-way door), (b) the stakes are high enough that a missed cascade causes material harm, or (c) a Simple Mode pass reveals a feedback loop or non-obvious incentive that needs tracing.
+
 
 ### Full Protocol (Important Decisions)
 
@@ -56,12 +60,14 @@ For each effect, estimate when it manifests:
 
 | Time | Question | Calibration |
 |------|----------|-------------|
-| Immediate | What happens in 10 min/hours? | Halve your estimate |
-| Short-term | What happens in 10 days/weeks? | Halve your estimate |
-| Medium-term | What happens in 10 months/years? | Halve your estimate |
-| Long-term | What happens in 10+ years? | Quarter your estimate |
+| Immediate | What happens in 10 min/hours? | Halve your **time-to-effect** estimate. (How soon, not how big.) |
+| Short-term | What happens in 10 days/weeks? | Halve your **time-to-effect** estimate. |
+| Medium-term | What happens in 10 months/years? | Halve your **time-to-effect** estimate. |
+| Long-term | What happens in 10+ years? | Quarter your **time-to-effect** estimate. |
 
-**Calibration warning:** Farnam Street heuristic — when in doubt, halve time horizon estimates. Systematic optimism is the default human bias.
+**Calibration warning (Farnam Street, Shane Parrish):** the halving rule applies to **when** an effect manifests, not to **how strong** it will be. Systematic optimism is the default human bias on time horizons — people under-estimate how long change takes, especially cumulative or institutional change. Source: Farnam Street, "Second-Order Thinking." Do not treat 30 min or 5 yrs as precise; they are anchors to deflate optimism.
+
+
 
 #### Step 5: Feedback Loop Detection
 Connect to [`systems-thinking`](../systems-thinking/SKILL.md) for loop analysis.

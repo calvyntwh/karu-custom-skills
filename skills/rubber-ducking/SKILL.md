@@ -22,6 +22,14 @@ metadata:
 *   **Debug print statements:** Temporary logging code.
 
 > [!NOTE]
+
+> **Operational definition of "complex"** (the Pragmatic Programmer, original source of rubber-duck debugging, does not give a numeric threshold). Use this proxy:
+> - **>5 logical branches** (if/else, switch, ternary) in a single function, **OR**
+> - **any state-machine transition** (mutates shared state, event-driven handlers), **OR**
+> - **any conditional on user-supplied input.**
+>
+> One-liners, getter/setter functions, and obvious utilities do not meet this bar; skip ducking for them.
+>
 > If you hesitate to explain it, it's complex. If you can explain it in one sentence without thinking, skip ducking.
 
 ## Prioritization: Which Bugs Does Ducking Catch Best?

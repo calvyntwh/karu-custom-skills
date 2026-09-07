@@ -42,17 +42,29 @@ List every proposed feature or task.
 > The V/E formula is a tiebreaker, not the core insight. If you can identify the vital few without it, skip the formula.
 
 ### Step 2: Add Confidence Modifiers
-Rate confidence in each estimate (1-3):
+Rate confidence in each estimate (1-3) on two separate axes:
 
-| Confidence | Meaning |
-|------------|---------|
-| 1 | Speculative (no evidence) |
-| 2 | Based on partial data |
-| 3 | Based on benchmarks or user research |
+**V_conf (Value confidence)** — how sure are you that this item creates the value you estimate?
+
+| V_conf | Anchor | Source |
+|--------|--------|--------|
+| 1 | Speculative — gut feel, no evidence | Juran Quality Handbook: no data, opinion only |
+| 2 | Partial data — analogous case, anecdotal user research, or one source | QSM Almanac: single-source estimate |
+| 3 | Measured — benchmarks, A/B test data, repeated user research | QSM Almanac: multi-source validated |
+
+**E_conf (Effort confidence)** — how sure are you that the effort estimate is accurate?
+
+| E_conf | Anchor | Source |
+|--------|--------|--------|
+| 1 | Speculative — no prior work, novel stack | QSM Almanac: unknown unknowns dominant |
+| 2 | Partial data — analogous feature shipped, partial decomposition | QSM Almanac: range estimate plausible |
+| 3 | Measured — same feature shipped before, effort tracked | QSM Almanac: historical data anchors |
 
 Apply discount: `Adjusted Score = (V/E) × (V_conf × E_conf) / 4`
 
-Low-confidence items get penalized automatically.
+**Note on anchors:** V_conf and E_conf use the same 1-3 scale but different anchoring rubrics. V_conf asks "do I have evidence this creates value?"; E_conf asks "do I have evidence this takes the effort I think?" Confusing the two leads to false precision.
+
+
 
 ### Step 3: The Cut (Iterative, Not One-Time)
 
