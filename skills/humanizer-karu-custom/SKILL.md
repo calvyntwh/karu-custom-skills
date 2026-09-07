@@ -14,6 +14,13 @@ allowed-tools:
 
 # Humanizer: Remove AI Writing Patterns
 
+## When to Use
+*   **Editing AI-generated prose:** When text sounds templated, formulaic, or "average reader".
+*   **Reviewing drafts:** When a document, post, or report was written with LLM assistance and needs a human voice.
+*   **Removing tells:** When a paragraph has vocabulary like "Additionally", "crucial", "testament", or strings of em dashes.
+*   **Adding voice:** When the cleaned text needs personality, rhythm, or specific details instead of generic claims.
+*   **File- or paste-level cleanup:** When given a path or pasted block, change prose only and leave code, data, and markup alone.
+
 ## When NOT to Use This Skill
 
 - **Academic writing with genuine hedging**: "may indicate", "further research needed" are correct in scholarship
