@@ -159,16 +159,6 @@ Early wins create conditions for later problems (success → reduced caution →
 
 ### Option Limitation
 Each decision closes future options — track what's being foreclosed.
-
-## Resources
-
-- [Farnam Street: Second-Order Thinking](https://fs.blog/second-order-thinking/)
-- [Howard Marks: The Most Important Thing](https://www.goodreads.com/book/show/10454418-the-most-important-thing)
-- [Untools: Second-Order Thinking](https://untools.co/second-order-thinking/)
-- [Ness Labs: Levels of Thinking](https://nesslabs.com/levels-of-thinking)
-
----
-
 ## Evaluations
 
 ### Eval 1: Time Horizon Calibration
@@ -185,3 +175,12 @@ Each decision closes future options — track what's being foreclosed.
 **Scenario:** Skill is being used on every minor decision.
 **Expected:** Applies meta-inversion — identifies analysis paralysis as second-order cost, suggests limiting use to reversible high-stakes decisions.
 **Pass criteria:** Recognizes over-use pattern, recommends proportional analysis investment.
+
+
+## Resources
+
+- [Farnam Street: Second-Order Thinking](https://fs.blog/second-order-thinking/)
+- [Howard Marks: The Most Important Thing](https://www.goodreads.com/book/show/10454418-the-most-important-thing)
+- [Untools: Second-Order Thinking](https://untools.co/second-order-thinking/)
+- [Ness Labs: Levels of Thinking](https://nesslabs.com/levels-of-thinking)
+

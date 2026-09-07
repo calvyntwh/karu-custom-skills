@@ -63,7 +63,9 @@ for i in range(len(arr) - 1):
 **Translation:**
 1.  "We iterate through the array, stopping one element before the end."
 2.  "If the current element is greater than the next element..."
-3.  "...we swap them."
+
+### 2b. Sanity-Check the Translation
+Before comparing to the user's goal, re-read your English description and ask: *would a junior engineer reading this agree this is what the code does?* A confident-but-wrong translation sails through Step 3 unchanged otherwise. If your reading would not survive a junior engineer's sanity check, return to Step 2 and re-translate.
 
 ### 3. Goal Alignment Check (CRITICAL)
 Compare your English description to the User's stated goal.

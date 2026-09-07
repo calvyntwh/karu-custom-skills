@@ -43,10 +43,11 @@ Prioritize failure modes by severity. Under time pressure, focus on Tier 1:
 **Pareto note:** ~80% of incidents come from Tier 1. **MUST audit Tier 1 before all else.** If time-constrained, audit only Tier 1.
 
 ## Timeboxing
-*   **Full protocol:** 30 minutes maximum
-*   **Condensed protocol:** 10 minutes maximum
-*   **Per failure mode:** 5 minutes investigation max—if unresolved, log as "unvalidated" and escalate
+*   **Full protocol:** 30 minutes maximum **per system under review** (one feature, one endpoint, one PR — not the entire codebase)
+*   **Condensed protocol:** 10 minutes maximum per system
+*   **Per failure mode:** 5 minutes investigation max—if unresolved, log as "unvalidated" and escalate. A single failure mode = one attacker/attack vector (e.g., 'SQL injection on user_id field'); do not chunk optimistically to evade the timebox.
 *   **Stop condition:** All Tier 1 and Tier 2 failure modes have safeguards OR time expires
+
 
 ## The Protocol: Become the Saboteur
 Do not ask "Does this work?". Ask "How do I break this?".
@@ -80,7 +81,7 @@ Ask: **"I want to achieve the Anti-Goal. What is the easiest way to do it?"**
 > **CRITICAL:** If Tier 1 (Critical) failure modes are found, they MUST have safeguards before proceeding.
 
 ### 3. Proof of Fragility
-List concrete, specific pathways to failure. Use `references/failure_modes.md` for inspiration.
+List concrete, specific pathways to failure. **Only consult `references/failure_modes.md` after drawing the attack tree** — it is a checklist of past discoveries, not a substitute for attacker thinking. Relying on it without first identifying the system's actual trust boundaries produces catalog-driven reasoning (see Meta-Inversion below).
 *   "I will send a 10GB file to crash the memory."
 *   "I will send a request with `admin=true`."
 *   "I will unplug the database cable mid-transaction."

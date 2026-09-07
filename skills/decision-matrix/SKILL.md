@@ -58,7 +58,7 @@ Ask the user to rate the importance of each criterion.
 | 1 | Nice to have |
 | 2 | Moderately important |
 | 3 | Very important |
-| 4 | Critical / Non-negotiable |
+| 4 | Critical (high weight, but compensable — non-negotiables should be filtered in Step 3 instead) |
 
 ### 5. Score Options (with Evidence)
 Rate each option against each criterion (1-5 scale).
@@ -145,11 +145,6 @@ Before presenting results, verify:
 
 **Review:** If no entries in 60+ days, check LEARNINGS.md before next use.
 
-## Resources
-*   [Detailed Research Notes](references/research.md)
-
----
-
 ## Evaluations
 
 ### Eval 1: Three-Way Technology Choice
@@ -166,3 +161,7 @@ Before presenting results, verify:
 **Scenario:** User asks "pick a cloud vendor" with constraint "must support HIPAA."
 **Expected:** Identifies HIPAA as non-negotiable, filters vendors BEFORE scoring.
 **Pass criteria:** Applies filter first, then matrix only on remaining options.
+
+## Resources
+*   [Detailed Research Notes](references/research.md)
+
