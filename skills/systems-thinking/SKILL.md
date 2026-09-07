@@ -135,7 +135,15 @@ Stop analysis when:
 
 ---
 
+## Resources
+*   [Detailed Research Notes](references/research.md)
+*   [System Archetypes Reference](references/system_archetypes.md)
+
+---
+
 ## Evaluations
+
+
 
 ### Eval 1: Retry Loop Explosion Detection
 **Scenario:** Adding retry logic to failed API calls. Service has 500ms timeout.

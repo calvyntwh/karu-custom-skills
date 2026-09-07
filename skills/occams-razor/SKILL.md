@@ -119,7 +119,15 @@ After applying Occam's Razor, log **only failures**:
 
 ---
 
+## Resources
+*   [Detailed Research Notes](references/research.md)
+*   [Complexity Indicators Reference](references/complexity_indicators.md)
+
+---
+
 ## Evaluations
+
+
 
 ### Eval 1: Problem Verification Before Pruning
 **Scenario:** User says "this library does X, we should remove it." You cannot explain what X solves for the user.
