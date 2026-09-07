@@ -42,15 +42,29 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ---
 
-### Pattern 13: Em Dash Usage (Model-Dependent) [TIER 1]
+### Pattern 13: Em Dash Usage (Model-Dependent, 2026) [TIER 1, MODEL-DEPENDENT]
 
-**Problem:** LLMs use em dashes more than professional human writers, often with surrounding spaces (contrary to typographic guidelines) and in formulaic "punched up" sales contexts.
+**Problem:** Em dash frequency is the most model-specific tell. Different models in 2025–2026 use em dashes at very different rates, so the rule must be calibrated, not absolute.
+
+**Model calibration (2026):**
+
+| Model | Em dash signal | Action |
+|-------|----------------|--------|
+| Claude (Opus/Sonnet/Haiku) | **HIGH** — 3–4 em dashes per few hundred words is a fingerprint | Always rewrite; replace with period, comma, colon, or parentheses |
+| ChatGPT (GPT-5+) | LOW — em dashes are suppressed by training | Leave alone unless writer's sample avoids them |
+| Gemini 3 | mixed | Reduce to 1–2 per paragraph |
+| Grok | medium | Reduce unless voice uses them |
+
+**Always weak alone for non-Claude sources.** A single em dash needs company from other tells. A writer's voice sample overrides the rule — match the sample's rate. Leave dashes inside code blocks, inline code, commands, paths, and URLs alone.
+
 
 **Before:**
 > The term is primarily promoted by Dutch institutions—not by the people themselves. You don't say "Netherlands, Europe" as an address—yet this mislabeling continues—even in official documents.
 
 **After:**
 > The term is primarily promoted by Dutch institutions, not by the people themselves. You don't say "Netherlands, Europe" as an address, yet this mislabeling continues in official documents.
+
+
 
 
 ---
@@ -81,12 +95,14 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ## Model Era Note (2026)
 
-Patterns P25, P27, P28 are uniform across models (HIGH signal in all). Only these vary:
+Patterns P25, P27, P28, P31-P36 are uniform across models (HIGH signal in all). These vary by model:
 
 | Pattern family | Claude | ChatGPT (5.1+) | Gemini | Grok |
 |---|---|---|---|---|
 | Em dash overuse (P13) | **HIGH** | low (suppressed) | mixed | medium |
 | Curly quotes (P18) | low (rare) | **HIGH** | low | medium |
+| GPT-5 pattern-heavy transitions (P37) | low | **MEDIUM-HIGH** | medium | medium |
+| Claude hedging openers (P38) | **MEDIUM-HIGH** | low | low | low |
 
 ---
 
@@ -140,7 +156,110 @@ Patterns P25, P27, P28 are uniform across models (HIGH signal in all). Only thes
 **After:**
 > Fridrichová reads Blois and Bar as critical of truncations, not endorsing them.
 
+### Pattern 31: Not X but Y [TIER 1]
+
+**Watch for:** not X but Y; not just, not only, not merely X, but Y; it's not X, it's Y; the reversed form X rather than Y; the same contrast split across sentences ("This does not mean X. It means Y."); clipped negative tails ("..., no guessing").
+
+**Problem:** The negative half names something no one claimed, so the positive half sounds larger. State the point directly. Keep a contrast only when the negative half corrects a belief the reader actually holds, or when both halves carry information.
+
+**Before:**
+> It's not just about the beat riding under the vocals; it's part of the aggression and atmosphere. It's not merely a song, it's a statement.
+**After:**
+> The heavy beat adds to the aggressive tone.
+
 ---
+
+### Pattern 32: One-line Closers & Dramatic Fragments [TIER 1]
+
+**Watch for:** a one-sentence paragraph that restates the paragraph before it; "That is the real win."; "Read that again."; "Let that sink in."; the same closer after several sections; a row of fragments ("No aesthetic prior. No nostalgia."); one word in ALL CAPS or with periods between words (`every. single. day.`).
+
+**Problem:** The line asks the reader to pause on a claim instead of adding to it. One short sentence can carry emphasis when it carries a new fact. Cut a closer that repeats. Merge a row of fragments into a sentence with a specific claim.
+
+**Before:**
+> Then AlphaEvolve arrived. It had no preference for symmetry. No aesthetic prior. No nostalgia for human taste. The old rules were gone.
+**After:**
+> AlphaEvolve changed the search because it did not favor symmetry or human-looking designs.
+
+---
+
+### Pattern 33: Staged Run-Up Before the Point [TIER 1]
+
+**Watch for:** Let's dive in, let's explore, let's break this down, here's what you need to know, without further ado, heads up, quick note, Honestly?, Look, Here's the thing, The thing is, Real talk, casual versions like "one thing that bit me, so pay attention".
+
+**Problem:** The writer announces the point or stages a moment of candor instead of making the point. Remove the run-up, not just its tone. "Honestly" or "look" inside a casual sentence is ordinary; the tell is the standalone opener before a routine claim.
+
+**Before:**
+> Let's dive into how caching works in Next.js. Here's what you need to know.
+**After:**
+> Next.js caches data at multiple layers, including request memoization, the data cache, and the router cache.
+
+---
+
+### Pattern 34: Arguing with No One [TIER 1]
+
+**Watch for:** This isn't (mainly) about, I'm not saying, To be clear, Don't get me wrong, This is not to say, Some might say... but, A tempting approach would be, One might be tempted to, An obvious approach would be, You might think... but, It would be easy to just.
+
+**Problem:** The text answers an objection or rejects an option that appears nowhere else. Remove the defense; if it holds a real claim, state the claim.
+
+**Before:**
+> This isn't mainly about prompt length, and I'm not arguing that documentation doesn't matter. You could categorize the problem another way, but the issue is whether the agent can use the instruction when it acts.
+**After:**
+> The issue is whether the agent can use the instruction when it acts.
+
+---
+
+### Pattern 35: Repeated Sentence Openings [TIER 1]
+
+**Watch for:** Several sentences in a row starting with the same subject, often `she`/`he`/`the team`, because repetition is handled by rule instead of by ear.
+
+**Problem:** Merge the sentences, change the subject, or begin with the action. Do not ban the repeated word; a remaining sentence may still start with "She." Writers also repeat on purpose for rhythm ("She came. She saw. She conquered.").
+
+**Before:**
+> She noted the door. She noted the lock on it. She filed both away.
+**After:**
+> She noted the door and its lock, then filed both away.
+
+---
+
+### Pattern 36: `X and Y` Decorative Headings [TIER 1]
+
+**Watch for:** `Awards and recognition`, `Challenges and Legacy`, `Future Outlook`, `Recognition`, `Awards and Accolades`, and similar X-and-Y heading patterns as standalone sections. Almost ubiquitous in 2025+ AI output.
+
+**Problem:** Section headings in the `X and Y` form appear at the end of articles to gesture at importance. Convert to specific facts, or remove the section.
+
+**Before:**
+> ## Awards and Recognition
+>
+> She has received numerous accolades from industry publications.
+**After:**
+> In 2023, Fast Company named her to its annual list of innovative founders.
+
+
+### Pattern 37: GPT-5 Pattern-Heavy Transitions [TIER 2, MODEL-SPECIFIC]
+
+**Watch for:** "However, it's important to consider…", "That said, critics argue…", "It's important to acknowledge that…", "This perspective, while valid…", "Of course, one could argue…", "While [X] may be true, [Y] also deserves consideration."
+
+**Problem:** GPT-5 and successors balance perspectives by default, even when the user did not ask. The result is a counterpoint inserted into every paragraph that follows a formula. State the counterpoint plainly if it is real; cut it if it is filler.
+
+**Before:**
+> The migration reduced latency by 40%. However, it's important to consider that some legacy clients were affected.
+**After:**
+> The migration reduced latency by 40%. A few legacy clients had to update their SDKs to stay compatible.
+
+---
+
+### Pattern 38: Claude Hedging Openers [TIER 2, MODEL-SPECIFIC]
+
+**Watch for:** "I'd be happy to", "I'd like to", "Sure!", "It depends on…", "Of course!" as a sentence-fragment opener, "That depends" without follow-up.
+
+**Problem:** Claude uses sentence-fragment openers that read as warm in conversation but as filler in prose. If the writer's voice does not use them, remove. Keep them when matching a conversational or coaching voice.
+
+**Before:**
+> Sure! I can help with that. It depends on what you're trying to do, but here are a few options.
+**After:**
+> That depends on the use case. Three options to consider:
+
+
 
 ## Tier 2: MEDIUM Impact Patterns
 

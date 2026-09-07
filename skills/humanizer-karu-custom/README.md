@@ -4,20 +4,21 @@ A Claude Code skill that removes signs of AI-generated writing from text, making
 
 ## Installation
 
-### Recommended (clone directly into Claude Code skills directory)
+### Recommended (clone from this repo)
 
 ```bash
 mkdir -p ~/.claude/skills
-git clone https://github.com/blader/humanizer.git ~/.claude/skills/humanizer
+git clone https://github.com/calvyntwh/karu-custom-skills.git
+cp -r karu-custom-skills/skills/humanizer-karu-custom ~/.claude/skills/humanizer-karu-custom
 ```
 
 ### Manual install/update (only the skill file)
 
-If you already have this repo cloned (or you downloaded `SKILL.md`), copy the skill file into Claude Code’s skills directory:
+If you already have this repo cloned (or you downloaded `SKILL.md`), copy the skill file into Claude Code's skills directory:
 
 ```bash
-mkdir -p ~/.claude/skills/humanizer
-cp SKILL.md ~/.claude/skills/humanizer/
+mkdir -p ~/.claude/skills/humanizer-karu-custom
+cp SKILL.md ~/.claude/skills/humanizer-karu-custom/
 ```
 
 ## Usage
@@ -110,10 +111,14 @@ Based on [Wikipedia's "Signs of AI writing"](https://en.wikipedia.org/wiki/Wikip
 
 ## Version History
 
+- **5.1.0** - Added Process section (mark/draft/check/final), three output modes (paste/file/embedded), six new Tier 1 patterns from blader/Wikipedia 2026 (Not X but Y, One-line closers, Staged run-up, Arguing with no one, Repeated sentence openings, `X and Y` headings), GPT-5 transitions and Claude hedging as Tier 2, model-aware em dash calibration, When-not-to-act voice-carrier list, 2026 detection-context note.
+- **5.0.1** - Tightened Add Soul step 4: do not invent specifics the source lacks. Added Eval 5 (fact preservation in rewrite).
+- **5.0.0** - Model-aware detection across Claude/ChatGPT/Gemini/Grok. Pattern numbering tied to PATTERNS.md.
 - **2.1.1** - Fixed pattern #18 example (curly quotes vs straight quotes)
 - **2.1.0** - Added before/after examples for all 24 patterns
 - **2.0.0** - Complete rewrite based on raw Wikipedia article content
 - **1.0.0** - Initial release
+
 
 ## License
 
