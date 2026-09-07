@@ -2,6 +2,8 @@
 name: map-vs-territory
 description: Empiricism and Reality Checking. Prioritizing runtime truth over documentation. Use when debugging discrepancies, validating APIs, or when code comments might be outdated.
 license: MIT
+metadata:
+  version: "1.0"
 ---
 
 # Map vs. Territory (The Reality Check)

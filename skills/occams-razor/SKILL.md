@@ -2,6 +2,8 @@
 name: occams-razor
 description: Complexity Pruning and Simplification using the Subtraction Method. Use when refactoring, reducing boilerplate, or challenging over-engineered solutions.
 license: MIT
+metadata:
+  version: "1.0"
 ---
 
 # Occam's Razor (The Subtraction Method)

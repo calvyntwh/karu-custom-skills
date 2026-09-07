@@ -2,6 +2,8 @@
 name: decision-matrix
 description: Objective trade-off analysis using weighted criteria. Eliminates popularity bias by requiring user-defined priorities. Use when choosing between technologies, architectures, or vendors.
 license: MIT
+metadata:
+  version: "1.0"
 ---
 
 # Decision Matrix (The Bias Eliminator)

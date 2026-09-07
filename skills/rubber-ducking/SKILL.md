@@ -2,6 +2,8 @@
 name: rubber-ducking
 description: Logic validation by verbalization. Translate code to plain English to catch semantic errors. Use before running complex logic or when debugging "it should work" failures.
 license: MIT
+metadata:
+  version: "1.0"
 ---
 
 # Rubber Ducking (The Logic Validator)

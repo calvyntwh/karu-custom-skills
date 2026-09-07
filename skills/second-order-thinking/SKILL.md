@@ -2,6 +2,8 @@
 name: second-order-thinking
 description: Consider cascading consequences of decisions across time horizons. Ask "And then what?" to anticipate second and third-order effects. Use when making important decisions, planning projects, or analyzing outcomes that seem counterintuitive. Distinct from inversion-thinking (which asks "How could this fail?") - second-order asks "What happens next, and next?"
 license: MIT
+metadata:
+  version: "1.0"
 ---
 
 # Second-Order Thinking

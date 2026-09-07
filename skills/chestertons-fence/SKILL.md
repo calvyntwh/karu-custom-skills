@@ -2,6 +2,8 @@
 name: chestertons-fence
 description: A safety protocol for refactoring. Do not remove a fence until you know why it was put up. Use when deleting, simplifying, or "fixing" code you do not fully understand.
 license: MIT
+metadata:
+  version: "1.0"
 ---
 
 # Chesterton's Fence (The Context Audit)

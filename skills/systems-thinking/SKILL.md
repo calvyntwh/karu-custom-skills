@@ -2,6 +2,8 @@
 name: systems-thinking
 description: Architectural analysis using Feedback Loops and System Dynamics. Use when designing architectures, scaling systems, or analyzing side effects.
 license: MIT
+metadata:
+  version: "1.0"
 ---
 
 # Systems Thinking (The Loop Protocol)
