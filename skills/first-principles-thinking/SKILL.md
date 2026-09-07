@@ -12,7 +12,7 @@ metadata:
 ## Overview
 First Principles Thinking is a mode of inquiry that relentlessly questions assumptions to get to the fundamental truth of a problem, then builds a solution from scratch. It is the tool of the innovator, used to bypass "reasoning by analogy" (copying what others do).
 
-## When to Use This Skill
+## When to Use
 *   **Innovation:** When the user wants to invent a new way of doing things.
 *   **Stuck Points:** When standard solutions are too expensive, too slow, or impossible.
 *   **Debugging:** When "it should work" but doesn't—strip away assumptions about why it *should* work.
