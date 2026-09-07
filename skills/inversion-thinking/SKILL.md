@@ -15,7 +15,7 @@ metadata:
 *   **During** debugging (to find root causes).
 *   **When** a plan seems "too simple" or "optimistic".
 
-## When NOT to Use This Skill
+## When NOT to Use
 *   **Non-adversarial contexts:** When the "enemy" is nature/probability, not malice—use probabilistic risk analysis instead.
 *   **Low-stakes/one-off tasks:** When failure impact is acceptable and full protocol overhead isn't warranted.
 *   **Well-understood domains:** When standard safeguards (frameworks, libraries) already cover known failure modes.

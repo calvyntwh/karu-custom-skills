@@ -126,7 +126,7 @@ Trace the **mechanism**, not just the direction.
 | [`chestertons-fence`](../chestertons-fence/SKILL.md) | Before concluding — verify you understand why cascade terminates or loops |
 | [`first-principles-thinking`](../first-principles-thinking/SKILL.md) | To challenge the assumption that cascade analysis is necessary |
 
-## Self-Improvement Protocol (Simplified)
+## Self-Improvement Protocol
 
 After a decision plays out, log **only meaningful misses**:
 

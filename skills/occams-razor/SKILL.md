@@ -84,7 +84,7 @@ If workaround complexity > removed complexity, **do not prune**.
 
 **Rule:** If systems-thinking identifies a reinforcing loop involving this component, **do not prune** without tracing the full loop.
 
-## Self-Improvement Protocol (Simplified)
+## Self-Improvement Protocol
 
 After applying Occam's Razor, log **only failures**:
 

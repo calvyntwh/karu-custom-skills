@@ -21,7 +21,7 @@ allowed-tools:
 *   **Adding voice:** When the cleaned text needs personality, rhythm, or specific details instead of generic claims.
 *   **File- or paste-level cleanup:** When given a path or pasted block, change prose only and leave code, data, and markup alone.
 
-## When NOT to Use This Skill
+## When NOT to Use
 
 - **Academic writing with genuine hedging**: "may indicate", "further research needed" are correct in scholarship
 - **Legal/compliance documents**: Formulaic phrases are required for precision

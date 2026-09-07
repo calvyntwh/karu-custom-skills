@@ -18,7 +18,7 @@ First Principles Thinking is a mode of inquiry that relentlessly questions assum
 *   **Debugging:** When "it should work" but doesn't—strip away assumptions about why it *should* work.
 *   **Cost Analysis:** When you need to understand the absolute floor of a cost structure.
 
-## When NOT to Use This Skill
+## When NOT to Use
 *   **Well-trodden problems:** When analogical reasoning is sufficient and the cost of being wrong is low.
 *   **Quantum/Biological systems:** FPT assumes independence of atomic units; quantum entanglement and biological emergence violate this.
 *   **Social/Human systems:** Human behavior is not decomposable into physics axioms—consult domain experts instead.
