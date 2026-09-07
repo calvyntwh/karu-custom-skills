@@ -60,6 +60,10 @@ Ask the simple questions:
 *   "What edge case were they fighting?"
 *   "Is that edge case still possible today?"
 
+### 4a. The Rubber-Duck Check (Before Decision)
+Before finalizing DELETE/KEEP/REFACTOR, explain the code's logic in plain English:
+*If you cannot explain WHY it works, you do not understand it enough to change it.*
+
 ### 4. The Decision (System Loop)
 Compare the Past Context with the Present Reality.
 
@@ -70,9 +74,6 @@ Compare the Past Context with the Present Reality.
 | **I found the reason, and the risk is real.** | **KEEP & DOCUMENT** | The Map was wrong. Add a comment explaining *why* this "ugly" code saves the system. |
 | **I cannot find the reason.** | **DO NOT DELETE** | **CRITICAL:** Flag for human review. It is a "load-bearing fence". |
 
-### 4b. The Rubber-Duck Check (Before Decision)
-Before finalizing DELETE/KEEP/REFACTOR, explain the code's logic in plain English:
-*If you cannot explain WHY it works, you do not understand it enough to change it.*
 
 ## Example: The "Ugly" Null Check
 

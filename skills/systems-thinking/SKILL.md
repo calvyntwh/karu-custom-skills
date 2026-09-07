@@ -65,6 +65,12 @@ What is connected to this node?
 **Delay Effect:** Does change take time to manifest?
 *   *Example:* Cache warming, connection pool exhaustion, resource leaks.
 
+### 3.5. R-Loop Safeguard Gate (Inline)
+> [!IMPORTANT]
+> **CRITICAL:** If a reinforcing loop (R) with short delay is found in Step 3, **MUST** propose a safeguard before proceeding to Step 4. Unchecked R-loops cause cascading failures.
+
+Record the safeguard alongside the loop in the Loops Inventory (see Step 7).
+
 ### 4. Validation (The Pre-Mortem)
 Do not guess. Look for evidence.
 *   **Log Analysis:** Look at past logs. Did similar changes cause latency spikes?
@@ -90,12 +96,8 @@ Stop analysis when:
 *   You've hit an **emergence boundary** — nodes interact to produce behavior none have alone
 *   Time spent exceeds value of further analysis (Pareto: 80% of insights from 20% of loops)
 
-> [!IMPORTANT]
-> **CRITICAL:** If a reinforcing loop (R) with short delay is found, **MUST** propose a safeguard before proceeding. Unchecked R-loops cause cascading failures.
 
-## Skill Integration Matrix
 
-| Skill | When to Chain |
 |-------|---------------|
 | [`chestertons-fence`](../chestertons-fence/SKILL.md) | Before removing any node — verify it's not load-bearing |
 | [`occams-razor`](../occams-razor/SKILL.md) | After systems-thinking: if no loops involve this component, simplification is safer |

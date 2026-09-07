@@ -88,7 +88,7 @@ If workaround complexity > removed complexity, **do not prune**.
 
 After applying Occam's Razor, log **only failures**:
 
-**Log to `.learnings/simplifications.md`:**
+**Log to `.learnings/CORRECTIONS.md`:**
 ```markdown
 - [YYYY-MM-DD] {what was removed} → {outcome}
 ```

@@ -130,7 +130,7 @@ Trace the **mechanism**, not just the direction.
 
 After a decision plays out, log **only meaningful misses**:
 
-**Log to `.learnings/cascades.md`:**
+**Log to `.learnings/CORRECTIONS.md`:**
 ```markdown
 - [YYYY-MM-DD] {decision} → {missed effect} ({actual outcome})
 ```

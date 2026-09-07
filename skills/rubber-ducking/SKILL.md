@@ -77,7 +77,7 @@ Compare your English description to the User's stated goal.
 *   **If Match:** Proceed to run/save the code.
 *   **If Mismatch:** Do NOT run. Fix the logic first. The translation revealed the bug.
 
-### 4b. Systems Check (Before Running)
+### 5. Systems Check (Before Running)
 Ask yourself:
 *   "What does this code return?"
 *   "What does the caller expect?"

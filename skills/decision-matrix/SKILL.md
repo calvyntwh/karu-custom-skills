@@ -77,7 +77,7 @@ Rate each option against each criterion (1-5 scale).
 ### 6. Calculate Weighted Scores
 For each option: `Total = Σ (Score × Weight)`
 
-Present results as a range: "Vue: 38-42, React: 36-40" to acknowledge uncertainty.
+Present results as a single Total per option (e.g., "Vue: 40, React: 35, Angular: 31"). Use ranges only when the user explicitly asks for uncertainty estimates.
 
 ### 7. Recommend & Verbalize
 Present the matrix and state the winner with reasoning.
@@ -125,7 +125,7 @@ Before presenting results, verify:
 
 | Situation | Use Instead/Also |
 |-----------|------------------|
-| 2 options | [Pros/Cons](../rubber-ducking/SKILL.md) or [rubber-ducking](../rubber-ducking/SKILL.md) |
+| 2 options | [rubber-ducking](../rubber-ducking/SKILL.md) |
 | Need to validate scores | [map-vs-territory](../map-vs-territory/SKILL.md) |
 | Criteria might be wrong | [chestertons-fence](../chestertons-fence/SKILL.md) |
 | Risk of over-analysis | [occams-razor](../occams-razor/SKILL.md) |
