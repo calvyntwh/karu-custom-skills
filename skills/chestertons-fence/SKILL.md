@@ -31,12 +31,12 @@ Before investigating, assess the **blast radius** if you're wrong:
 
 | Risk Level | Examples | Investigation Depth |
 |------------|----------|---------------------|
-| **HIGH** | Security checks, auth guards, race condition locks, payment validation | Full archaeology + rubber-ducking explanation |
-| **MEDIUM** | Bug workarounds, legacy API compatibility, edge case guards | Git blame + commit message review |
-| **LOW** | Performance optimizations, caching, memoization | Quick check; easy to add back if needed |
+| **HIGH** | Security checks, auth guards, race condition locks, payment validation | Full archaeology + rubber-ducking explanation + **second reviewer required before DELETE** (see Stop Condition) |
 
 > [!NOTE]
 > If investigating HIGH-risk code and you cannot explain why it exists: **DO NOT DELETE.** Flag for human review.
+>
+> **HIGH-risk deletion requires a second reviewer even with explanation found.** Per Google eng-practices "What to look for in a code review" (google.github.io/eng-practices): *"for security-critical changes, require two reviewers."* This applies whether or not the agent can articulate the fence's origin — a confident-but-wrong explanation is the failure mode this skill exists to prevent. For MEDIUM and LOW risk, single-reviewer confidence is sufficient.
 
 ## The Protocol: The Context Audit
 **Constraint:** You are FORBIDDEN from deleting code if you cannot explain why it was added.
@@ -69,7 +69,7 @@ Compare the Past Context with the Present Reality.
 
 | Discovery | Action | Protocol |
 | :--- | :--- | :--- |
-| **I found the reason, and it is DEFINITELY obsolete.** | **DELETE** | Document the specific reason for deletion in your commit/PR. |
+| **I found the reason, and it is DEFINITELY obsolete.** | **DELETE** | Document the specific reason for deletion in your commit/PR. **HIGH-risk deletions require a second reviewer** (see Prioritization Matrix); single-agent DELETE on HIGH-risk code is a protocol violation. |
 | **I found the reason, and it is legitimate but complex.** | **REFACTOR** | Keep the protection, improve the clarity. Document the edge case. |
 | **I found the reason, and the risk is real.** | **KEEP & DOCUMENT** | The Map was wrong. Add a comment explaining *why* this "ugly" code saves the system. |
 | **I cannot find the reason.** | **DO NOT DELETE** | **CRITICAL:** Flag for human review. It is a "load-bearing fence". |

@@ -225,6 +225,9 @@ Key insight: "LLMs use statistical algorithms to guess what should come next. Th
 
 ## Evaluations
 
+**Format convention:** Each eval uses `Scenario / Expected / Pass criteria`. This is the karu convention; the closest upstream spec is Anthropic's skill-creator convention (`Input / Expected Output / Pass Criteria` + `Rationale`). The fields are equivalent; "Scenario" reads better for humanizer's domain where the input is a text excerpt rather than a literal prompt.
+
+
 ### Eval 1: Tier 1 Pattern Removal
 **Scenario:** Text contains "Additionally, this pivotal solution underscores our commitment" and multiple em dashes.
 **Expected:** Identifies AI vocabulary (Additionally, pivotal, underscores) and em dash overuse as Tier 1, removes all.
