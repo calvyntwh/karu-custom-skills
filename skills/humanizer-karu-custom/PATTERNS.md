@@ -4,6 +4,106 @@ Detailed pattern documentation with examples. See [SKILL.md](SKILL.md) for the m
 
 ---
 
+## Tier 0: NARRATIVE STRUCTURE Patterns (Address before Tier 1)
+
+Source: StoryScope (Russell et al., 2026, arXiv:2604.03136v6). Five LLMs converge on the same narrative feature space even when their surface style diverges. Surface-level humanization (Tier 1–3) cannot close this structural gap. Address these BEFORE Tier 1 vocabulary work. <!-- tier-0-activation: long-form-only -->
+
+> **Note on terminology:** "Narrative structure" here means discourse-level organization (event arcs, causality, temporal flow, thematic explicitness). It is distinct from Pattern 11's "structural contrast" — which is a sentence-level rhetorical device.
+
+---
+
+### S1: Flat Event Escalation [TIER 0]
+
+**Signal:** Every sentence carries equal weight. Tension stays constant; no peak, no release, no variation in intensity. A long piece that reads at one speed throughout.
+
+**Before:**
+> The project launched in March. The team built features. Users signed up. Revenue grew. The team added integrations. Users expanded their usage. The product reached profitability. Investors took notice. (84 words, all equal-weight factual statements, flat escalation throughout.)
+
+**After:**
+> The project launched in March with almost no fanfare — a Medium post, a few tweets, and a Slack channel where the three founders argued about pricing for two weeks. By April they had 200 users, most of them friends. Then something shifted in May: a single Hacker News thread brought 4,000 signups in 36 hours. The team was still arguing about pricing. (74 words, one peak (Hacker News moment), release (founder argument returns as grounded detail).)
+
+---
+
+### S2: Causally Tidy Argument [TIER 0]
+
+**Signal:** Every claim is followed by its resolution. No "I'm not sure, but…" qualifiers. Every "therefore" lands on a clean conclusion. Every thread is closed.
+
+**Before:**
+> The API was slow, so we optimized the database. The optimization reduced latency by 40%. The latency reduction improved user satisfaction. The improved satisfaction increased retention. The increased retention drove growth. Therefore, database optimization was the right decision.
+
+**After:**
+> We optimized the database in March and latency dropped by 40%, which seemed like the whole story for about six weeks. Then we noticed that the retention curve was bending in a way the optimization shouldn't have caused — at least not directly. I'm still not sure whether the database fix unmasked a different problem or whether users just got used to the new speed. Either way, retention is up.
+
+**Important:** S2 is about leaving one thread open deliberately, not about writing incoherently. Every claim you keep must still be supported. This is the same constraint as Add Soul step 4 and Eval 5 (Fact Preservation).
+
+---
+
+### S3: Linear Temporal / Logical Flow [TIER 0]
+
+**Signal:** The piece moves in one direction without a callback, digression, reversal, or parenthetical that re-contextualizes an earlier claim.
+
+**Before:**
+> First we built the prototype. Then we tested it with users. Then we iterated. Then we launched. Then we measured adoption. Then we raised a round.
+
+**After:**
+> First we built the prototype, then tested it with users, then iterated. The iteration phase actually started before the prototype was done — we just kept the prototype running while the second version was being built. By launch we were already arguing about what came after launch. The seed round happened in November, six weeks before the public launch.
+
+---
+
+### S4: Over-Explicit Themes [TIER 0]
+
+**Signal:** Sentences like "This represents…", "Symbolizing…", "Ultimately, this is about…", "This underscores the importance of…", "At its core, this story is about…". The theme is stated rather than implied.
+
+**Before:**
+> The team's persistence in the face of adversity represents the resilience that defines successful startups. Ultimately, this story is about the importance of never giving up.
+
+**After:**
+> Three of the original five engineers were still at the company when it hit profitability in 2024. None of them had taken a week off in eighteen months.
+
+---
+
+### S5: Generic Concrete Details [TIER 0]
+
+**Signal:** Vague nouns that sound specific but aren't ("the researcher," "industry experts," "recent studies," "the city," "the team"). The piece is full of category-placeholders.
+
+**Before:**
+> The researcher at the institute found that recent studies in the city suggest the team should reconsider its approach to the problem.
+
+**After:**
+> Maria Chen, a hydrologist at the Stockholm Environment Institute, found that water-table measurements taken between 2019 and 2024 suggest Uppsala should reconsider how it grants building permits in the southern district.
+
+**Important:** S5 means specificity the source or speaker can defend. If the source says "the researcher" without a name, do not invent one — paraphrase or restructure instead. This is the same constraint as Add Soul step 4 and Eval 5 (Fact Preservation). The names above are illustrative; replace with whatever the source actually names.
+
+---
+
+### S6: AI-Narrative-Cluster Position [TIER 0]
+
+**Signal:** The opening sentence or framing could plausibly have been written by any of 10 different LLMs and would land in roughly the same narrative-feature region. There is no writer-specific entry point.
+
+**Before:**
+> In today's fast-paced digital landscape, businesses are increasingly turning to AI solutions to streamline their operations and gain a competitive edge.
+
+**After:**
+> I keep thinking about the first time I watched a model rewrite its own prompt. It was 2 a.m. and I was doing nothing useful, and the thing I'd asked for help with was a stupid Python regex that I'd already solved twice. The model solved it once, then asked itself if the solution was efficient, then solved it again. I closed the laptop.
+
+---
+
+### S7: Rarity / Idiosyncrasy [TIER 0]
+
+**Signal:** The piece could be dropped into any of ten publications without edits. There is no framing, comparison, or detail that only THIS writer would choose.
+
+**Before:**
+> The new phone has a better camera, faster processor, and longer battery life than its predecessor.
+
+**After:**
+> The new phone has a better camera, faster processor, and longer battery life than its predecessor — though what I actually noticed first was that the haptic engine now clicks instead of buzzes, which is the kind of change you either love or don't notice at all.
+
+---
+
+**Trade-off vs. Tier 1–3:** Tier 0 is high-effort, low-recall. Most rewrites will score 4 of 7 by accident; pushing to 6+ requires deliberate choice. Use when the source is long-form or high-stakes; skip for short, transactional rewrites.
+
+---
+
 ## Tier 1: HIGH Impact Patterns
 
 ### Pattern 1: Undue Emphasis on Significance [TIER 1]

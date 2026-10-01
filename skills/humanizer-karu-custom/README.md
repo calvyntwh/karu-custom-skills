@@ -45,9 +45,11 @@ Based on [Wikipedia's "Signs of AI writing"](https://en.wikipedia.org/wiki/Wikip
 
 > "LLMs use statistical algorithms to guess what should come next. The result tends toward the most statistically likely result that applies to the widest variety of cases."
 
-## 38 Patterns Detected (Tier 1/2/3 with Before/After Examples)
+## 45 Patterns Detected (Tier 0 + Tier 1/2/3 with Before/After Examples)
 
 The full pattern catalog is in [PATTERNS.md](PATTERNS.md). Summary:
+
+**Tier 0 — NARRATIVE STRUCTURE (7 patterns, address before Tier 1 in long-form or high-stakes rewrites):** Flat event escalation, causally tidy argument, linear temporal/logical flow, over-explicit themes, generic concrete details, AI-narrative-cluster position, rarity/idiosyncrasy. Grounded in StoryScope (arXiv:2604.03136v6); see PATTERNS.md Tier 0 section for Before/After examples. Distinct from Pattern 11's "structural contrast" (sentence-level).
 
 **Tier 1 — HIGH impact** (16 patterns, address always): AI vocabulary, em dash overuse (model-aware), filler phrases, inflated significance, promotional language, sycophantic tone, vague connection, skipped heading levels, notability/media-coverage parade, misattributed source analysis, Not X but Y, one-line closers, staged run-up, arguing with no one, repeated sentence openings, `X and Y` decorative headings.
 
@@ -72,6 +74,7 @@ See [PATTERNS.md](PATTERNS.md) for full descriptions, before/after examples, and
 
 ## Version History
 
+- **6.0.0** - NEW Tier 0: NARRATIVE STRUCTURE patterns (S1–S7) grounded in StoryScope (arXiv:2604.03136v6, Russell et al. 2026). Tier 0 addresses discourse-level structure (event arcs, causality, temporal flow, thematic explicitness, idiosyncratic framing) that surface-only humanization cannot reach. Gated to long-form/high-stakes rewrites via the `<!-- tier-0-activation: long-form-only -->` HTML comment. Eval 6 added (≥5 of 7 structural patterns addressed). Term "NARRATIVE STRUCTURE" (discourse-level) chosen to disambiguate from Pattern 11's "structural contrast" (sentence-level). S5 cross-references Add Soul step 4 + Eval 5 (fact preservation — do not invent specifics). **Breaking change:** semver bump 5.1.0 → 6.0.0 because Tier 0 introduces a new address-before-existing-tiers layer.
 - **5.1.0** - Added Process section (mark/draft/check/final), three output modes (paste/file/embedded), six new Tier 1 patterns from blader/Wikipedia 2026 (Not X but Y, One-line closers, Staged run-up, Arguing with no one, Repeated sentence openings, `X and Y` headings), GPT-5 transitions and Claude hedging as Tier 2, model-aware em dash calibration, When-not-to-act voice-carrier list, 2026 detection-context note.
 - **5.0.1** - Tightened Add Soul step 4: do not invent specifics the source lacks. Added Eval 5 (fact preservation in rewrite).
 - **5.0.0** - Model-aware detection across Claude/ChatGPT/Gemini/Grok. Pattern numbering tied to PATTERNS.md.
